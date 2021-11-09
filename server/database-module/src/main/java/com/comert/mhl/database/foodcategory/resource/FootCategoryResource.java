@@ -4,7 +4,8 @@ import com.comert.mhl.database.common.exception.EntityNotDeletedException;
 import com.comert.mhl.database.common.exception.EntityNotFoundException;
 import com.comert.mhl.database.common.exception.EntityNotSavedException;
 import com.comert.mhl.database.common.exception.EntityNotUpdatedException;
-import com.comert.mhl.database.common.model.dto.ResponseMessage;
+import com.comert.mhl.database.common.model.dto.ExceptionMessage;
+import com.comert.mhl.database.common.model.dto.IdAndName;
 import com.comert.mhl.database.food.model.entity.Food;
 import com.comert.mhl.database.foodcategory.model.entity.FoodCategory;
 import com.comert.mhl.database.foodcategory.service.FoodCategoryService;
@@ -31,15 +32,16 @@ public class FootCategoryResource {
     @GET
     @Path("find")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findFoodCategoryById(@QueryParam("id") Integer foodCategoryId) {
+    @Consumes(value = {MediaType.APPLICATION_JSON})
+    public Response findFoodCategoryById(@QueryParam("foodcategoryid") Integer foodCategoryId) {
         FoodCategory foodCategory;
 
         try {
             foodCategory = foodCategoryService.findFoodCategoryById(foodCategoryId);
         } catch (EntityNotFoundException exception) {
             return Response
-                    .status(404)
-                    .entity(new ResponseMessage(exception.getMessage(), exception.getProperty()))
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new ExceptionMessage(exception.getMessage(), exception.getProperty()))
                     .build();
         }
 
@@ -58,13 +60,14 @@ public class FootCategoryResource {
             foodCategoryService.saveFoodCategory(foodCategory);
         } catch (EntityNotSavedException exception) {
             return Response
-                    .status(400)
-                    .entity(new ResponseMessage(exception.getMessage(), exception.getProperty()))
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new ExceptionMessage(exception.getMessage(), exception.getProperty()))
                     .build();
         }
 
         return Response
                 .ok()
+                .entity(foodCategory.getFoodCategoryId())
                 .build();
     }
 
@@ -77,8 +80,8 @@ public class FootCategoryResource {
             foodCategoryService.updateFoodCategory(foodCategory);
         } catch (EntityNotUpdatedException exception) {
             return Response
-                    .status(400)
-                    .entity(new ResponseMessage(exception.getMessage(), exception.getProperty()))
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new ExceptionMessage(exception.getMessage(), exception.getProperty()))
                     .build();
         }
 
@@ -91,13 +94,13 @@ public class FootCategoryResource {
     @Path("delete")
     @Produces(value = {MediaType.APPLICATION_JSON})
     @Consumes(value = {MediaType.APPLICATION_JSON})
-    public Response deleteFoodCategory(@QueryParam("id") Integer foodCategoryId) {
+    public Response deleteFoodCategory(@QueryParam("foodcategoryid") Integer foodCategoryId) {
         try {
             foodCategoryService.deleteFoodCategory(foodCategoryId);
         } catch (EntityNotDeletedException exception) {
             return Response
-                    .status(400)
-                    .entity(new ResponseMessage(exception.getMessage(), exception.getProperty()))
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new ExceptionMessage(exception.getMessage(), exception.getProperty()))
                     .build();
         }
 
@@ -114,16 +117,15 @@ public class FootCategoryResource {
         Set<FoodCategory> foodCategorySet;
 
         try {
-
             if (firstResult == 0 && maxResult == 0)
                 foodCategorySet = foodCategoryService.listFoodCategories();
             else
                 foodCategorySet = foodCategoryService.listFoodCategories(firstResult, maxResult);
 
-        } catch (EntityNotFoundException exception){
+        } catch (EntityNotFoundException exception) {
             return Response
-                    .status(404)
-                    .entity(new ResponseMessage(exception.getMessage(), exception.getProperty()))
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new ExceptionMessage(exception.getMessage(), exception.getProperty()))
                     .build();
         }
 
@@ -134,27 +136,47 @@ public class FootCategoryResource {
     }
 
     @GET
-    @Path("listfoodcategoryandchildentities")
+    @Path("listfoodcategoriesbyidandname")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    @Consumes(value = {MediaType.APPLICATION_JSON})
-    public Response findFoodCategoryByIdWithChildEntities(@QueryParam("id") Integer foodCategoryId) {
-
-        Set<Food> foods;
+    public Response listFoodCategoriesByIdAndName() {
+        Set<IdAndName> foodCategoryIdAndNames;
 
         try {
-            foods = foodCategoryService.findFoodCategoryById(foodCategoryId).getFoods();
-            if (foods.isEmpty())
-                throw new EntityNotFoundException("Foods could not be found", foodCategoryId.toString());
+            foodCategoryIdAndNames = foodCategoryService.listFoodCategoriesByIdAndName();
         } catch (EntityNotFoundException exception) {
             return Response
-                    .status(404)
-                    .entity(new ResponseMessage(exception.getMessage(), exception.getProperty()))
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new ExceptionMessage(exception.getMessage(), exception.getProperty()))
                     .build();
         }
 
         return Response
                 .ok()
-                .entity(foods)
+                .entity(foodCategoryIdAndNames)
+                .build();
+    }
+
+    @GET
+    @Path("listfoodcategorychildentities")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    @Consumes(value = {MediaType.APPLICATION_JSON})
+    public Response listFoodCategoryChildEntities(@QueryParam("foodcategoryid") Integer foodCategoryId) {
+        Set<Food> foodSet;
+
+        try {
+            foodSet = foodCategoryService.findFoodCategoryById(foodCategoryId).getFoods();
+            if (foodSet.isEmpty())
+                throw new EntityNotFoundException("Food Category does not have child entities", foodCategoryId.toString());
+        } catch (EntityNotFoundException exception) {
+            return Response
+                    .status(Response.Status.BAD_REQUEST)
+                    .entity(new ExceptionMessage(exception.getMessage(), exception.getProperty()))
+                    .build();
+        }
+
+        return Response
+                .ok()
+                .entity(foodSet)
                 .build();
     }
 

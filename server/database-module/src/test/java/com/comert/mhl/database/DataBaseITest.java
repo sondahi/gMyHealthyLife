@@ -18,10 +18,13 @@ import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.comert.mhl.database.common.util.FoodCategoryData.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @EnabledOnJre(JRE.JAVA_11)
 @ExtendWith(ArquillianExtension.class)
@@ -69,10 +72,9 @@ public class DataBaseITest {
         @RunAsClient
         @Test
         public void testSaveEntities() {
-            FoodCategory foodCategory1 = foodCategory1();
-            FoodCategory foodCategory2 = foodCategory2();
-            FoodCategory foodCategoryWithChildEntities = foodCategoryWithChildEntities();
-
+            final var foodCategory1 = foodCategory1();
+            final var foodCategory2 = foodCategory2();
+            final var foodCategoryWithChildEntities = foodCategoryWithChildEntities();
 
             Response response1 = target.path("/save")
                     .request(MediaType.APPLICATION_JSON)
@@ -81,7 +83,8 @@ public class DataBaseITest {
             assertThat(response1)
                     .matches(
                             r -> r.getStatus() == Response.Status.OK.getStatusCode()
-                    );
+                    )
+                    .matches(r -> r.readEntity(Integer.class) == 1);
 
             Response response2 = target.path("/save")
                     .request(MediaType.APPLICATION_JSON)
@@ -90,7 +93,8 @@ public class DataBaseITest {
             assertThat(response2)
                     .matches(
                             r -> r.getStatus() == Response.Status.OK.getStatusCode()
-                    );
+                    )
+                    .matches(r -> r.readEntity(Integer.class) == 2);
 
             Response response3 = target.path("/save")
                     .request(MediaType.APPLICATION_JSON)
@@ -99,7 +103,9 @@ public class DataBaseITest {
             assertThat(response3)
                     .matches(
                             r -> r.getStatus() == Response.Status.OK.getStatusCode()
-                    );
+                    )
+                    .matches(r -> r.readEntity(Integer.class) == 3);
+
         }
 
         @Order(value = 2)
@@ -107,40 +113,57 @@ public class DataBaseITest {
         @Test
         public void testFindEntity() {
             Response response = target.path("/find")
-                    .queryParam("id", 1)
+                    .queryParam("foodcategoryid", 1)
                     .request(MediaType.APPLICATION_JSON)
                     .get();
+
+            final var foodCategory = response.readEntity(FoodCategory.class);
 
             assertThat(response)
                     .matches(
                             r -> r.getStatus() == Response.Status.OK.getStatusCode()
-                    )
-                    .matches(
-                            r -> r.readEntity(FoodCategory.class)
-                                    .getFoodCategoryName()
-                                    .equals(foodCategory1()
-                                            .getFoodCategoryName())
                     );
+
+            assertThat(foodCategory)
+                    .matches(fC -> fC.getFoodCategoryName().equals(foodCategory1().getFoodCategoryName()));
         }
 
         @Order(value = 3)
         @RunAsClient
         @Test
         public void testUpdateEntity() {
-            FoodCategory foodCategory = new FoodCategory("Updated Food Category");
+            final var foodCategory = new FoodCategory("Updated Food Category");
             foodCategory.setFoodCategoryId(1);
 
-            Response response = target.path("/update")
+            Response response1 = target.path("/update")
                     .request(MediaType.APPLICATION_JSON)
                     .put(Entity.entity(foodCategory, MediaType.APPLICATION_JSON));
 
-            assertThat(response)
+            assertThat(response1)
                     .matches(
-                            r -> r.getStatus() == 200
+                            r -> r.getStatus() == Response.Status.OK.getStatusCode()
                     );
+
+            Response response2 = target.path("/find")
+                    .queryParam("foodcategoryid", 1)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
+
+            final var updatedFoodCategory = response2.readEntity(FoodCategory.class);
+
+            assertThat(response2)
+                    .matches(
+                            r -> r.getStatus() == Response.Status.OK.getStatusCode()
+                    );
+
+            assertThat(updatedFoodCategory)
+                    .matches(fC -> fC.getFoodCategoryName().equals("Updated Food Category"));
 
         }
 
+        // Burda kaldık
+
+        @Disabled
         @Order(value = 4)
         @RunAsClient
         @Test
@@ -149,14 +172,16 @@ public class DataBaseITest {
                     .request(MediaType.APPLICATION_JSON)
                     .get();
 
+            Set<FoodCategory> foundFoodCategorySet1 = response1.readEntity(HashSet.class);
+
             assertThat(response1)
                     .matches(
-                            r -> r.getStatus() == 200
-                    )
-                    .matches(
-                            r -> r.readEntity(Set.class)
-                                    .size() == 3
+                            r -> r.getStatus() == Response.Status.OK.getStatusCode()
                     );
+
+            foundFoodCategorySet1.iterator().forEachRemaining(System.out::println);
+
+           assertTrue(foundFoodCategorySet1.contains(foodCategoryWithIdAndName(1,"Updated Food Category")));
 
             Response response2 = target.path("/listfoodcategories")
                     .queryParam("firstresult", 0)
@@ -166,7 +191,7 @@ public class DataBaseITest {
 
             assertThat(response2)
                     .matches(
-                            r -> r.getStatus() == 200
+                            r -> r.getStatus() == Response.Status.OK.getStatusCode()
                     )
                     .matches(
                             r -> r.readEntity(Set.class)
@@ -175,12 +200,13 @@ public class DataBaseITest {
 
         }
 
+        @Disabled
         @Order(value = 5)
         @RunAsClient
         @Test
         public void testChildEntities() {
-            Response response = target.path("/listfoodcategoryandchildentities")
-                    .queryParam("id", 3)
+            Response response = target.path("/listfoodcategorychildentities")
+                    .queryParam("foodcategoryid", 3)
                     .request(MediaType.APPLICATION_JSON)
                     .get();
 
@@ -197,7 +223,7 @@ public class DataBaseITest {
         public void testDeleteEntity() {
 
             Response response1 = target.path("/delete")
-                    .queryParam("id", 1)
+                    .queryParam("foodcategoryid", 1)
                     .request(MediaType.APPLICATION_JSON)
                     .delete();
 
@@ -207,7 +233,7 @@ public class DataBaseITest {
                     );
 
             Response response2 = target.path("/delete")
-                    .queryParam("id", 2)
+                    .queryParam("foodcategoryid", 2)
                     .request(MediaType.APPLICATION_JSON)
                     .delete();
 
@@ -217,7 +243,7 @@ public class DataBaseITest {
                     );
 
             Response response3 = target.path("/delete")
-                    .queryParam("id", 3)
+                    .queryParam("foodcategoryid", 3)
                     .request(MediaType.APPLICATION_JSON)
                     .delete();
 

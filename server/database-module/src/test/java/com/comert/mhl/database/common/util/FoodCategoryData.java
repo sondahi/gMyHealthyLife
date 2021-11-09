@@ -37,8 +37,6 @@ public class FoodCategoryData {
         return foodCategory;
     }
 
-    // service
-
     public static FoodCategory foodCategoryWithIdAndName(final Integer foodCategoryId, final String foodCategoryName){
         final var foodCategory = new FoodCategory(foodCategoryName);
         foodCategory.setFoodCategoryId(foodCategoryId);
