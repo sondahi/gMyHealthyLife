@@ -1,6 +1,7 @@
 package com.comert.mhl.database.foodcategory.repository;
 
 import com.comert.mhl.database.common.exception.EntityNotDeletedException;
+import com.comert.mhl.database.common.exception.EntityNotFoundException;
 import com.comert.mhl.database.common.exception.EntityNotSavedException;
 import com.comert.mhl.database.common.exception.EntityNotUpdatedException;
 import com.comert.mhl.database.common.model.dto.IdAndName;
@@ -82,6 +83,7 @@ public class FoodCategoryRepository implements FoodCategoryService {
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     public void deleteFoodCategory(Integer foodCategoryId) throws EntityNotDeletedException {
         final var foodCategory = entityManager.getReference(FoodCategory.class, foodCategoryId);
+
         try {
             entityManager.remove(foodCategory);
             entityManager.flush();
