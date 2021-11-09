@@ -80,17 +80,35 @@ public class FoodCategoryServiceImpl implements FoodCategoryService {
     }
 
     @Override
-    public Set<FoodCategory> listFoodCategories() {
+    public Set<FoodCategory> listFoodCategories() throws EntityNotFoundException{
+        Set<FoodCategory> foodCategories = foodCategoryRepository.listFoodCategories();
+
+        if(foodCategories.isEmpty())
+            throw new EntityNotFoundException("FoodCategories could not be found","FoodCategories");
+
         return foodCategoryRepository.listFoodCategories();
     }
 
     @Override
-    public Set<FoodCategory> listFoodCategories(final int firstResult, final int maxResult) {
+    public Set<FoodCategory> listFoodCategories(final int firstResult, final int maxResult) throws EntityNotFoundException{
+        if(firstResult <0 || maxResult<0)
+            throw new EntityNotFoundException("Fields can not be negative","firstResult or maxResult");
+
+        final var foodCategories = foodCategoryRepository.listFoodCategories();
+
+        if(foodCategories.isEmpty())
+            throw new EntityNotFoundException("FoodCategories could not be found","firstResult : "+firstResult+" , maxResult : "+maxResult);
+
         return foodCategoryRepository.listFoodCategories(firstResult, maxResult);
     }
 
     @Override
-    public Set<IdAndName> listFoodCategoriesByIdAndName() {
+    public Set<IdAndName> listFoodCategoriesByIdAndName() throws EntityNotFoundException{
+        final var foodCategoryIdAndNames = foodCategoryRepository.listFoodCategoriesByIdAndName();
+
+        if(foodCategoryIdAndNames.isEmpty())
+            throw new EntityNotFoundException("FoodCategory IdAndNames could not be found","foodCategory");
+
         return foodCategoryRepository.listFoodCategoriesByIdAndName();
     }
 

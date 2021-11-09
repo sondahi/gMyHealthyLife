@@ -1,7 +1,6 @@
 package com.comert.mhl.database.foodcategory.repository;
 
 import com.comert.mhl.database.common.exception.EntityNotDeletedException;
-import com.comert.mhl.database.common.exception.EntityNotFoundException;
 import com.comert.mhl.database.common.exception.EntityNotSavedException;
 import com.comert.mhl.database.common.exception.EntityNotUpdatedException;
 import com.comert.mhl.database.common.model.dto.IdAndName;

@@ -19,10 +19,10 @@ public interface FoodCategoryService {
 
     void deleteFoodCategory(final Integer foodCategoryId) throws EntityNotDeletedException;
 
-    Set<FoodCategory> listFoodCategories();
+    Set<FoodCategory> listFoodCategories() throws EntityNotFoundException;
 
-    Set<FoodCategory> listFoodCategories(final int firstResult, final int maxResult);
+    Set<FoodCategory> listFoodCategories(final int firstResult, final int maxResult) throws EntityNotFoundException;
 
-    Set<IdAndName> listFoodCategoriesByIdAndName();
+    Set<IdAndName> listFoodCategoriesByIdAndName() throws EntityNotFoundException;
 
 }
