@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: gokaycomert
+  Date: 05.05.21
+  Time: 02:46
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Title</title>
+</h:head>
+
+<h:body>
+    <h1>Confirm Payment</h1><br/>
+    <h:form>
+        <p:commandButton value="pay" action="#{paymentController.pay}" ajax="false">
+            <f:param name="paymentId" value="#{paymentController.paymentId}"/>
+            <f:param name="PayerID" value="#{paymentController.payerId}"/>
+        </p:commandButton>
+    </h:form>
+</h:body>
+
+</html>

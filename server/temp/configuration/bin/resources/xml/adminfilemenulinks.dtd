@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- XML değil, W3.org dan detaylara bakılabilir. veri haberleşmesi yaparsak detaylara ihtiyaç var mesela null girmeyin şu olacak vs.-->
+<!ELEMENT menu (link*)> <!--!ELEMENT eleman tanımlıyorum, menu eleman ismi, (link* bir veya çok ? olursa sıfır yada bir detaylara bakarsın) içerik: içerik texte olabilir başka elemanlarda -->
+<!ELEMENT link (name,url)> <!-- name ve url olacak-->
+<!ATTLIST link id CDATA #REQUIRED> <!-- unique id olacak, CDATA text ID dersek sadece int gerekiyor, required olmak zorunda -->
+<!ELEMENT name (#PCDATA)>
+<!ELEMENT url (#PCDATA)>

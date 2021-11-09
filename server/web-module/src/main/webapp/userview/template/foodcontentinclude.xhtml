@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: gokaycomert
+  Date: 13.05.21
+  Time: 01:24
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+    <h:outputLabel value="Food"/><br/>
+    <h:form id="foodForm">
+
+        <h:selectOneMenu id="selectedValue" value="#{foodController.selectedValue}">
+            <f:selectItem itemValue="0" itemLabel="--select a food--"/>
+            <f:selectItems value="#{foodController.selectableItems}" var="idAndName" itemValue="#{idAndName.value}" itemLabel="#{idAndName.label}"/>
+            <f:ajax event="valueChange" execute="@this" render="foodGrid"/>
+        </h:selectOneMenu><br/>
+
+    </h:form><br/>
+
+    <h:panelGrid id="foodGrid" columns="2" border="1">
+        <h:graphicImage id="image" value="#{foodController.foodLogoPath}"
+                        height="50" width="50" rendered="#{foodController.logoRendered}"/>
+        <h:outputLabel value="foodName"/>
+        <h:outputText id="foodName" value="#{foodController.selectedFood.foodName}"/>
+        <h:outputLabel value="calorie"/>
+        <h:outputText id="calorie" value="#{foodController.selectedFood.basic.calorie}"/>
+        <h:outputText id="protein" value="#{foodController.selectedFood.basic.protein}"/>
+        <h:outputText id="carbohydrate" value="#{foodController.selectedFood.basic.carbohydrate}"/>
+        <h:outputText id="fat" value="#{foodController.selectedFood.basic.fat}"/>
+        <h:outputText id="fiber" value="#{foodController.selectedFood.basic.fiber}"/>
+        <h:outputText id="lactose" value="#{foodController.selectedFood.basic.lactose}"/>
+        <h:outputText id="saturatedFattyAcids" value="#{foodController.selectedFood.basic.saturatedFattyAcids}"/>
+        <h:outputText id="omega3" value="#{foodController.selectedFood.basic.omega3}"/>
+        <h:outputText id="vitaminA" value="#{foodController.selectedFood.vitamin.vitaminA}"/>
+        <h:outputText id="vitaminB1" value="#{foodController.selectedFood.vitamin.vitaminB1}"/>
+        <h:outputText id="vitaminB2" value="#{foodController.selectedFood.vitamin.vitaminB2}"/>
+        <h:outputText id="vitaminB3" value="#{foodController.selectedFood.vitamin.vitaminB3}"/>
+        <h:outputText id="vitaminB6" value="#{foodController.selectedFood.vitamin.vitaminB6}"/>
+        <h:outputText id="vitaminB12" value="#{foodController.selectedFood.vitamin.vitaminB12}"/>
+        <h:outputText id="vitaminC" value="#{foodController.selectedFood.vitamin.vitaminC}"/>
+        <h:outputText id="vitaminD" value="#{foodController.selectedFood.vitamin.vitaminD}"/>
+        <h:outputText id="vitaminE" value="#{foodController.selectedFood.vitamin.vitaminE}"/>
+        <h:outputText id="vitaminK1" value="#{foodController.selectedFood.vitamin.vitaminK1}"/>
+        <h:outputText id="vitaminK2" value="#{foodController.selectedFood.vitamin.vitaminK2}"/>
+        <h:outputText id="folicAcid" value="#{foodController.selectedFood.vitamin.folicAcid}"/>
+        <h:outputText id="calcium" value="#{foodController.selectedFood.mineral.calcium}"/>
+        <h:outputText id="iodine" value="#{foodController.selectedFood.mineral.iodine}"/>
+        <h:outputText id="iron" value="#{foodController.selectedFood.mineral.iron}"/>
+        <h:outputText id="magnesium" value="#{foodController.selectedFood.mineral.magnesium}"/>
+        <h:outputText id="phosphorus" value="#{foodController.selectedFood.mineral.phosphorus}"/>
+        <h:outputText id="potassium" value="#{foodController.selectedFood.mineral.potassium}"/>
+        <h:outputText id="selenium" value="#{foodController.selectedFood.mineral.selenium}"/>
+        <h:outputText id="sodium" value="#{foodController.selectedFood.mineral.sodium}"/>
+        <h:outputText id="zinc" value="#{foodController.selectedFood.mineral.zinc}"/>
+    </h:panelGrid><br/>
+</h:body>
+
+</html>

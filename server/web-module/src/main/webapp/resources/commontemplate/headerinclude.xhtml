@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: gokaycomert
+  Date: 12.05.21
+  Time: 23:46
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:body>
+    <h1>Header</h1><br/>
+    <h:form>
+        <h:outputLink value="/logout">logout</h:outputLink><br/>
+        <p:selectOneMenu value="#{localeController.memberLocale}" converter="localeConverter">
+            <f:selectItems value="#{localeController.applicationLocales}" var="locale" itemValue="#{locale}" itemLabel="#{locale.displayLanguage}"/>
+        </p:selectOneMenu>
+        <p:commandButton value="Change Language" action="#{localeController.changeMemberLocale}" ajax="false"/>
+    </h:form>
+</h:body>
+
+</html>

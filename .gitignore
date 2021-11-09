@@ -1,0 +1,15 @@
+.idea
+/target
+
+*.flattened-pom.xml
+
+server/application-module/target
+server/web-module/target
+server/database-module/target
+server/mail-module/target
+server/payment-module/target
+
+server/common-sources/logger/target
+server/common-sources/exception-converter/target
+
+clients/

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+    <datasource jta="true" jndi-name="java:/MySqlDS" pool-name="MySqlDS" enabled="true" use-ccm="true">
+        <connection-url>jdbc:mysql://localhost:3306/mhl</connection-url>
+        <driver-class>com.mysql.cj.jdbc.Driver</driver-class>
+        <connection-property name="createDatabaseIfNotExist">true</connection-property>
+        <connection-property name="serverTimezone">UTC</connection-property>
+        <connection-property name="characterEncoding">UTF8</connection-property>
+        <connection-property name="characterSetResults">UTF8</connection-property>
+        <driver>mysql</driver>
+        <security>
+            <user-name>root</user-name>
+            <password>gCm183238!</password>
+        </security>
+        <validation>
+            <valid-connection-checker class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLValidConnectionChecker"/>
+            <background-validation>true</background-validation>
+            <exception-sorter class-name="org.jboss.jca.adapters.jdbc.extensions.mysql.MySQLExceptionSorter"/>
+        </validation>
+    </datasource>
+</datasources>

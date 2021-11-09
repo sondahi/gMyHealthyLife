@@ -1,0 +1,3 @@
+no enum .MİLLİSECONDS hatası almamak için /bin/standalone.conf dosyasına -Duser.language=en özelliği eklenilmelidir.
+Public erişim için standalone-full-ha.xml içerisinde public ve unsecure interface'ler 0.0.0.0 olarak ayarlanmalıdır. Management interface'i ise sonra karar verilecek.
+Mysql modülü eklenmelidir ve standalone-full-ha.xml içerisnde driver tanımı yapılmalıdır.

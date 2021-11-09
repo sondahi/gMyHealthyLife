@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE menu SYSTEM "adminfilemenulinks.dtd"> <!-- instruction process veri transferi yapmayacağımız sadece menu linkleri yazacağımız için dtd yeterli, DTD kullanmayacağım.-->
+<menu>
+    <link id="home">
+        <name>HOME PAGE</name> <!-- sıralama bile önemli-->
+        <url>home.jsp</url>
+    </link>
+    <link id="food">
+        <name>FOODS</name>
+        <url>food.jsp</url>
+    </link>
+    <link id="message">
+        <name>MESSAGE</name>
+        <url>message.jsp</url>
+    </link>
+    <link id="mail">
+        <name>MAIL</name>
+        <url>mail.jsp</url>
+    </link>
+</menu>

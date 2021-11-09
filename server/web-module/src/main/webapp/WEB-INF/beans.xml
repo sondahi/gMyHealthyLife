@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="https://jakarta.ee/xml/ns/jakartaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+       https://jakarta.ee/xml/ns/jakartaee/beans_3_0.xsd"
+       version="3.0"
+       bean-discovery-mode="all">
+
+
+    <!-- interceptorlar arası sıralama önemli yani iki tane interceptor varsa intercept edilen klasta burdaki sıra ile uygulanır. ama decorateor sonra yazılması önemli değil-->
+    <interceptors>
+        <class>com.comert.mhl.web.controller.security.AdminInterceptor</class>
+        <class>com.comert.mhl.web.controller.security.UserInterceptor</class>
+        <class>com.comert.mhl.web.controller.logger.InfoLogger</class>
+        <class>com.comert.mhl.web.controller.logger.TraceLogger</class>
+        <class>com.comert.mhl.web.controller.logger.WarningLogger</class>
+    </interceptors>
+
+</beans>

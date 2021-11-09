@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: gokaycomert
+  Date: 29.04.21
+  Time: 01:58
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Sign Up</title>
+</h:head>
+
+<h:body>
+    <h:form id="signUpForm">
+        <h1>Please Sign up</h1><br/>
+        <h:panelGroup id="registrationGrup">
+            <p:panelGrid id="eMailCheckGrid" columns="4" cellpadding="7">
+                <p:outputLabel for="memberEmail" value="${labelMessage['member.email']}"/>
+                <p:inputText id="memberEmail" value="#{signUpController.memberEmail}"
+                             validator="emailValidator" readonly="#{signUpController.emailValid}"
+                             required="true" requiredMessage="Value is required."/>
+                <p:commandButton id="checkButton" value="Check"
+                                 action="#{signUpController.checkMemberEmail}" update="registrationGrup"
+                                 validateClient="true" rendered="#{not signUpController.emailValid}"/>
+                <p:message for="memberEmail" severity="error" showDetail="true"/>
+            </p:panelGrid>
+            <p:panelGrid id="registrationGrid" columns="3" cellpadding="7" rendered="#{signUpController.emailValid}">
+                <p:outputLabel for="memberEmailConfirm" value="${labelMessage['member.email']}"/>
+                <p:inputText id="memberEmailConfirm" value="#{signUpController.memberEmailConfirm}" required="true"
+                             requiredMessage="Value is required."/>
+                <p:message for="memberEmailConfirm" severity="error" showDetail="true"/>
+
+                <p:outputLabel for="memberPassword" value="Password:"/>
+                <p:inputText id="memberPassword" value="#{signUpController.memberPassword}" required="true"
+                             requiredMessage="Value is required."/>
+                <p:message for="memberPassword" severity="error" showDetail="true"/>
+
+                <p:outputLabel for="memberPasswordConfirm" value="Re-Password:"/>
+                <p:inputText id="memberPasswordConfirm" value="#{signUpController.memberPasswordConfirm}"
+                             required="true" requiredMessage="Value is required."/>
+                <p:message for="memberPasswordConfirm" severity="error" showDetail="true"/>
+
+                <p:outputLabel for="memberName" value="${labelMessage['member.name']}"/>
+                <p:inputText id="memberName" value="#{signUpController.memberName}" required="true"
+                             requiredMessage="Value is required."/>
+                <p:message for="memberName" severity="error" showDetail="true"/>
+
+                <p:outputLabel for="memberSurname" value="Surname:"/>
+                <p:inputText id="memberSurname" value="#{signUpController.memberSurname}" required="true"
+                             requiredMessage="Value is required."/>
+                <p:message for="memberSurname" severity="error" showDetail="true"/>
+
+                <p:outputLabel for="memberBirthday" value="Birthday:"/>
+                <p:datePicker id="memberBirthday" value="#{signUpController.memberBirthday}" required="true"
+                              requiredMessage="Value is required."/>
+                <p:message for="memberBirthday" severity="error" showDetail="true"/>
+
+                <h:commandButton id="registrationButton" value="Register"
+                                 action="#{signUpController.register}" update="registrationGrid"/>
+            </p:panelGrid>
+        </h:panelGroup>
+    </h:form>
+
+</h:body>
+
+</html>

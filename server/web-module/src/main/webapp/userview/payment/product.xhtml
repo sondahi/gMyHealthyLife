@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: gokaycomert
+  Date: 05.05.21
+  Time: 01:22
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Title</title>
+</h:head>
+
+<h:body>
+    <h1>Select a Product</h1><br/>
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Total"/>
+            <p:inputText id="total" value="#{paymentController.order.total}"/>
+            <h:outputLabel value="Currency"/>
+            <p:inputText id="currency" value="#{paymentController.order.currency}"/>
+            <h:outputLabel value="Method"/>
+            <p:inputText id="method" value="#{paymentController.order.method}"/>
+            <h:outputLabel value="Intent"/>
+            <p:inputText id="intent" value="#{paymentController.order.intent}"/>
+            <h:outputLabel value="Description"/>
+            <p:inputText id="description" value="#{paymentController.order.description}"/>
+        </h:panelGrid>
+        <p:commandButton value="check out" action="#{paymentController.checkout}" ajax="false"/><br/>
+    </h:form>
+</h:body>
+
+</html>
