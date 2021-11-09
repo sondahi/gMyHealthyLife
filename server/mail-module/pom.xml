@@ -12,6 +12,13 @@
     <artifactId>mail-module</artifactId>
     <packaging>ejb</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+        </dependency>
+    </dependencies>
+
     <build>
         <pluginManagement>
             <plugins>
