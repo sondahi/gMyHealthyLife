@@ -81,12 +81,12 @@ public class FoodCategoryServiceImpl implements FoodCategoryService {
 
     @Override
     public Set<FoodCategory> listFoodCategories() throws EntityNotFoundException{
-        Set<FoodCategory> foodCategories = foodCategoryRepository.listFoodCategories();
+        final var foodCategoriesSet = foodCategoryRepository.listFoodCategories();
 
-        if(foodCategories.isEmpty())
+        if(foodCategoriesSet.isEmpty())
             throw new EntityNotFoundException("FoodCategories could not be found","FoodCategories");
 
-        return foodCategoryRepository.listFoodCategories();
+        return foodCategoriesSet;
     }
 
     @Override
@@ -94,22 +94,22 @@ public class FoodCategoryServiceImpl implements FoodCategoryService {
         if(firstResult <0 || maxResult<0)
             throw new EntityNotFoundException("Fields can not be negative","firstResult or maxResult");
 
-        final var foodCategories = foodCategoryRepository.listFoodCategories();
+        final var foodCategoriesSet = foodCategoryRepository.listFoodCategories();
 
-        if(foodCategories.isEmpty())
+        if(foodCategoriesSet.isEmpty())
             throw new EntityNotFoundException("FoodCategories could not be found","firstResult : "+firstResult+" , maxResult : "+maxResult);
 
-        return foodCategoryRepository.listFoodCategories(firstResult, maxResult);
+        return foodCategoriesSet;
     }
 
     @Override
     public Set<IdAndName> listFoodCategoriesByIdAndName() throws EntityNotFoundException{
-        final var foodCategoryIdAndNames = foodCategoryRepository.listFoodCategoriesByIdAndName();
+        final var foodCategoryIdAndNamesSet = foodCategoryRepository.listFoodCategoriesByIdAndName();
 
-        if(foodCategoryIdAndNames.isEmpty())
+        if(foodCategoryIdAndNamesSet.isEmpty())
             throw new EntityNotFoundException("FoodCategory IdAndNames could not be found","foodCategory");
 
-        return foodCategoryRepository.listFoodCategoriesByIdAndName();
+        return foodCategoryIdAndNamesSet;
     }
 
 }

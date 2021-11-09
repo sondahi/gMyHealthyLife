@@ -285,17 +285,18 @@ public class FoodCategoryServiceImplUTest {
         public void testListEntities() {
             final var fullCategorySet = fullFoodCategorySet();
             final var filteredCategorySet = filteredFoodCategorySet();
+
             when(repository.listFoodCategories()).thenReturn(fullCategorySet);
             when(repository.listFoodCategories(0, 1)).thenReturn(filteredCategorySet);
 
-            final var foundFullCategoryList = service.listFoodCategories();
-            final var foundFilteredCategoryList = service.listFoodCategories(0, 1);
+            final var foundFullCategorySet = service.listFoodCategories();
+            final var foundFilteredCategorySet = service.listFoodCategories(0, 1);
 
             verify(repository, times(1)).listFoodCategories();
             verify(repository, times(1)).listFoodCategories(0, 1);
 
-            assertEquals(foundFullCategoryList, fullCategorySet);
-            assertEquals(foundFilteredCategoryList, filteredCategorySet);
+            assertEquals(foundFullCategorySet, fullCategorySet);
+            assertEquals(foundFilteredCategorySet, filteredCategorySet);
         }
 
         @Test
@@ -303,11 +304,11 @@ public class FoodCategoryServiceImplUTest {
             final var categoryIdAndNameSet = foodCategoryIdAndNames();
             when(repository.listFoodCategoriesByIdAndName()).thenReturn(categoryIdAndNameSet);
 
-            Set<IdAndName> foundCategoryIdAndNameList = service.listFoodCategoriesByIdAndName();
+            Set<IdAndName> foundCategoryIdAndNameSet = service.listFoodCategoriesByIdAndName();
 
             verify(repository, times(1)).listFoodCategoriesByIdAndName();
 
-            assertEquals(foundCategoryIdAndNameList, categoryIdAndNameSet);
+            assertEquals(foundCategoryIdAndNameSet, categoryIdAndNameSet);
         }
 
     }
