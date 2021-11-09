@@ -56,7 +56,6 @@ public class Food extends Component implements Serializable {
     @Column(name = "foodName", unique = true)
     private String foodName;
 
-    @NotNull
     private String logoPath;
 
     @JsonBackReference

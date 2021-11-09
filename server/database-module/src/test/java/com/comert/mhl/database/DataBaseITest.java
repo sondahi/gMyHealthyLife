@@ -194,7 +194,7 @@ public class DataBaseITest {
         @Order(value = 6)
         @RunAsClient
         @Test
-        public void testDeleteEntity() throws InterruptedException {
+        public void testDeleteEntity() {
 
             Response response1 = target.path("/delete")
                     .queryParam("id", 1)
