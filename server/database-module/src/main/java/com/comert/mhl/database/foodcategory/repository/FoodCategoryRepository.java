@@ -74,7 +74,7 @@ public class FoodCategoryRepository implements FoodCategoryService {
                 else
                     throw exception;
             } else {
-                throw new EntityNotUpdatedException("FoodCategory might have already been deleted", foodCategory.getFoodCategoryName());
+                throw new EntityNotUpdatedException("Food Category might have already been deleted", foodCategory.getFoodCategoryName());
             }
         }
     }
@@ -89,7 +89,7 @@ public class FoodCategoryRepository implements FoodCategoryService {
         } catch (PersistenceException exception) {
             sessionContext.setRollbackOnly();
             if (exception instanceof jakarta.persistence.EntityNotFoundException)
-                throw new EntityNotDeletedException("FoodCategory might have already been deleted", foodCategoryId.toString());
+                throw new EntityNotDeletedException("Food Category might have already been deleted", foodCategoryId.toString());
             else
                 throw exception;
         }

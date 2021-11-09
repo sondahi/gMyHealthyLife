@@ -113,23 +113,24 @@ public class FootCategoryResource {
     public Response listFoodCategories(@QueryParam("firstresult") int firstResult, @QueryParam("maxresult") int maxResult) {
         Set<FoodCategory> foodCategorySet;
 
-        if (firstResult == 0 && maxResult == 0)
-            foodCategorySet = foodCategoryService.listFoodCategories();
-        else
-            foodCategorySet = foodCategoryService.listFoodCategories(firstResult, maxResult);
+        try {
 
-        if (foodCategorySet.isEmpty()) {
+            if (firstResult == 0 && maxResult == 0)
+                foodCategorySet = foodCategoryService.listFoodCategories();
+            else
+                foodCategorySet = foodCategoryService.listFoodCategories(firstResult, maxResult);
+
+        } catch (EntityNotFoundException exception){
             return Response
-                    .ok()
-                    .entity(404)
-                    .build();
-        } else {
-            return Response
-                    .ok()
-                    .entity(foodCategorySet)
+                    .status(404)
+                    .entity(new ResponseMessage(exception.getMessage(), exception.getProperty()))
                     .build();
         }
 
+        return Response
+                .ok()
+                .entity(foodCategorySet)
+                .build();
     }
 
     @GET

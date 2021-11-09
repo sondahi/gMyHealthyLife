@@ -15,6 +15,7 @@ import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.JRE;
 import org.mockito.Mockito;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.comert.mhl.database.common.util.FoodCategoryData.*;
@@ -127,7 +128,7 @@ public class FoodCategoryServiceImplUTest {
                     .isThrownBy(
                             () -> service.findFoodCategoryById(99)
                     )
-                    .withMessage("FoodCategory could not found")
+                    .withMessage("Food Category could not be found")
                     .matches(e -> e.getProperty().equals("99"));
 
             verify(repository, times(1)).findFoodCategoryById(99);
@@ -197,7 +198,7 @@ public class FoodCategoryServiceImplUTest {
         }
 
         @Test
-        public void testUpdateRemovedEntity() {
+        public void testUpdateDeletedEntity() {
             FoodCategory foodCategory = new FoodCategory();
             foodCategory.setFoodCategoryId(1);
             foodCategory.setFoodCategoryName("Removed Category");
@@ -210,7 +211,6 @@ public class FoodCategoryServiceImplUTest {
                     );
 
             verify(repository, times(1)).updateFoodCategory(foodCategory);
-
         }
 
         @Test
@@ -234,6 +234,63 @@ public class FoodCategoryServiceImplUTest {
 
             verify(repository, times(1)).deleteFoodCategory(1);
         }
+
+        @Test
+        public void testEmptyListAndThrowException() {
+            when(repository.listFoodCategories()).thenReturn(new HashSet<FoodCategory>());
+            when(repository.listFoodCategories(2, 5)).thenReturn(new HashSet<FoodCategory>());
+
+            assertThatExceptionOfType(EntityNotFoundException.class)
+                    .isThrownBy(
+                            () -> service.listFoodCategories()
+                    )
+                    .withMessage("Food Categories could not be found")
+                    .matches(e -> e.getProperty().equals("Food Categories"));
+
+            assertThatExceptionOfType(EntityNotFoundException.class)
+                    .isThrownBy(
+                            () -> service.listFoodCategories(2, 5)
+                    )
+                    .withMessage("Food Categories could not be found")
+                    .matches(e -> e.getProperty().equals("firstResult : " + "2" + " , maxResult : " + "5"));
+
+            verify(repository, times(1)).listFoodCategories();
+            verify(repository, times(1)).listFoodCategories(2, 5);
+        }
+
+        @Test
+        public void testListEntityWithNegativeArgument() {
+            assertThatExceptionOfType(EntityNotFoundException.class)
+                    .isThrownBy(
+                            () -> service.listFoodCategories(-1, 1)
+                    )
+                    .withMessage("Fields can not be negative")
+                    .matches(e -> e.getProperty().equals("firstResult or maxResult"))
+            ;
+
+            assertThatExceptionOfType(EntityNotFoundException.class)
+                    .isThrownBy(
+                            () -> service.listFoodCategories(1, -1)
+                    )
+                    .withMessage("Fields can not be negative")
+                    .matches(e -> e.getProperty().equals("firstResult or maxResult"));
+
+        }
+
+        @Test
+        public void testEmptyListIdAndNamesAndThrowException() {
+            when(repository.listFoodCategoriesByIdAndName()).thenReturn(new HashSet<IdAndName>());
+
+            assertThatExceptionOfType(EntityNotFoundException.class)
+                    .isThrownBy(
+                            () -> service.listFoodCategoriesByIdAndName()
+                    )
+                    .withMessage("Food Category Id And Names could not be found")
+                    .matches(e -> e.getProperty().equals("Food Categories"));
+
+            verify(repository, times(1)).listFoodCategoriesByIdAndName();
+        }
+
     }
 
     @Tag(value = "CRUD")

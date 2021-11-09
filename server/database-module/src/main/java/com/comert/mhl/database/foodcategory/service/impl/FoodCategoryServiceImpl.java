@@ -54,7 +54,7 @@ public class FoodCategoryServiceImpl implements FoodCategoryService {
         Optional<FoodCategory> foodCategory = Optional.ofNullable(foodCategoryRepository.findFoodCategoryById(foodCategoryId));
 
         return foodCategory.orElseThrow(
-                () -> new EntityNotFoundException("FoodCategory could not found", foodCategoryId.toString()));
+                () -> new EntityNotFoundException("Food Category could not be found", foodCategoryId.toString()));
     }
 
     @Override
@@ -84,7 +84,7 @@ public class FoodCategoryServiceImpl implements FoodCategoryService {
         final var foodCategoriesSet = foodCategoryRepository.listFoodCategories();
 
         if(foodCategoriesSet.isEmpty())
-            throw new EntityNotFoundException("FoodCategories could not be found","FoodCategories");
+            throw new EntityNotFoundException("Food Categories could not be found","Food Categories");
 
         return foodCategoriesSet;
     }
@@ -94,10 +94,10 @@ public class FoodCategoryServiceImpl implements FoodCategoryService {
         if(firstResult <0 || maxResult<0)
             throw new EntityNotFoundException("Fields can not be negative","firstResult or maxResult");
 
-        final var foodCategoriesSet = foodCategoryRepository.listFoodCategories();
+        final var foodCategoriesSet = foodCategoryRepository.listFoodCategories(firstResult, maxResult);
 
         if(foodCategoriesSet.isEmpty())
-            throw new EntityNotFoundException("FoodCategories could not be found","firstResult : "+firstResult+" , maxResult : "+maxResult);
+            throw new EntityNotFoundException("Food Categories could not be found","firstResult : "+firstResult+" , maxResult : "+maxResult);
 
         return foodCategoriesSet;
     }
@@ -107,7 +107,7 @@ public class FoodCategoryServiceImpl implements FoodCategoryService {
         final var foodCategoryIdAndNamesSet = foodCategoryRepository.listFoodCategoriesByIdAndName();
 
         if(foodCategoryIdAndNamesSet.isEmpty())
-            throw new EntityNotFoundException("FoodCategory IdAndNames could not be found","foodCategory");
+            throw new EntityNotFoundException("Food Category Id And Names could not be found","Food Categories");
 
         return foodCategoryIdAndNamesSet;
     }

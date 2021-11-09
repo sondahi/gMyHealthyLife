@@ -669,7 +669,7 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
                                     () -> repository.updateFoodCategory(foodCategory)
                             )
                     )
-                    .withMessage("FoodCategory might have already been deleted")
+                    .withMessage("Food Category might have already been deleted")
                     .matches(e -> e.getProperty().equals(foodCategory.getFoodCategoryName()));
 
             verify(sessionContext, times(1)).setRollbackOnly();
@@ -698,7 +698,7 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
                                     () -> repository.deleteFoodCategory(foodCategory.getFoodCategoryId())
                             )
                     )
-                    .withMessage("FoodCategory might have already been deleted")
+                    .withMessage("Food Category might have already been deleted")
                     .matches(e -> e.getProperty().equals(foodCategory.getFoodCategoryId().toString()));
 
             verify(sessionContext, times(1)).setRollbackOnly();
