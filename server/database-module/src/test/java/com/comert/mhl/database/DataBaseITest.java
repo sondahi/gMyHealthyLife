@@ -170,15 +170,31 @@ public class DataBaseITest {
                     .request(MediaType.APPLICATION_JSON)
                     .get();
 
-            final var foodCategories = response1.readEntity(Set.class);
+            final var foodCategoriesFullSet = response1.readEntity(Set.class);
 
             assertThat(response1)
                     .matches(
                             r -> r.getStatus() == Response.Status.OK.getStatusCode()
                     );
 
-            assertThat(foodCategories)
+            assertThat(foodCategoriesFullSet)
                     .hasSize(3);
+
+            Response response2 = target.path("/listfoodcategories")
+                    .queryParam("firstresult",0)
+                    .queryParam("maxresult",2)
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
+
+            final var foodCategoriesFilteredSet = response2.readEntity(Set.class);
+
+            assertThat(response2)
+                    .matches(
+                            r -> r.getStatus() == Response.Status.OK.getStatusCode()
+                    );
+
+            assertThat(foodCategoriesFilteredSet)
+                    .hasSize(2);
         }
 
         @Order(value = 5)
