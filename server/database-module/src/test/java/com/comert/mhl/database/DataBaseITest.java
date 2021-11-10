@@ -1,9 +1,7 @@
 package com.comert.mhl.database;
 
 import com.comert.mhl.database.common.model.dto.ExceptionMessage;
-import com.comert.mhl.database.food.model.entity.Food;
 import com.comert.mhl.database.foodcategory.model.entity.FoodCategory;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -181,8 +179,8 @@ public class DataBaseITest {
                     .hasSize(3);
 
             Response response2 = target.path("/listfoodcategories")
-                    .queryParam("firstresult",0)
-                    .queryParam("maxresult",2)
+                    .queryParam("firstresult", 0)
+                    .queryParam("maxresult", 2)
                     .request(MediaType.APPLICATION_JSON)
                     .get();
 
