@@ -102,4 +102,9 @@ public class FoodData {
         return food;
     }
 
+    public static Food foodWithId(Integer foodId, Food food){
+        food.setFoodId(foodId);
+        return food;
+    }
+
 }
