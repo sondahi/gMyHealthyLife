@@ -41,6 +41,7 @@
         <!--project general-->
         <org.glassfish.jersey.version>3.0.3</org.glassfish.jersey.version><!--jersey-bom: compile (clients), test (domain - integration)-->
         <org.apache.commons.version>3.12.0</org.apache.commons.version><!--commons-lang3: compile-->
+        <com.fasterxml.jackson.core.version>2.12.3</com.fasterxml.jackson.core.version><!--jackson-annotations : -->
         <org.hibernate.version>5.6.0.Final</org.hibernate.version><!--hibernate-core-jakarta: compile (desktop), test (database)-->
         <org.hibernate.validator.version>7.0.1.Final</org.hibernate.validator.version><!--hibernate-validator: compile (desktop), test(database)-->
         <org.glassfish.version>4.0.2</org.glassfish.version><!--jakarta.el: dependency for hibernate-validator: compile (desktop), test(database)-->
@@ -78,6 +79,12 @@
                 <version>${org.glassfish.jersey.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${com.fasterxml.jackson.core.version}</version>
+                <scope>provided</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
