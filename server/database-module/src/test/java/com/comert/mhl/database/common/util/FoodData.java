@@ -6,6 +6,9 @@ import com.comert.mhl.database.common.model.entity.component.Vitamin;
 import com.comert.mhl.database.food.model.entity.Food;
 import org.junit.jupiter.api.Disabled;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Disabled
 public class FoodData {
 
@@ -102,9 +105,11 @@ public class FoodData {
         return food;
     }
 
-    public static Food foodWithId(Integer foodId, Food food){
-        food.setFoodId(foodId);
-        return food;
+    public static Set<Food> foodSet(){
+        Set<Food> foodSet = new HashSet<>();
+        foodSet.add(food1());
+        foodSet.add(food2());
+        return foodSet;
     }
 
 }

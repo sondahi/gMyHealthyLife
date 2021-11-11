@@ -2,7 +2,6 @@ package com.comert.mhl.database;
 
 import com.comert.mhl.database.common.model.dto.ExceptionMessage;
 import com.comert.mhl.database.common.model.dto.IdAndName;
-import com.comert.mhl.database.food.model.entity.Food;
 import com.comert.mhl.database.foodcategory.model.entity.FoodCategory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -24,10 +23,10 @@ import org.junit.jupiter.api.condition.EnabledOnJre;
 import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.util.HashSet;
 import java.util.Set;
 
 import static com.comert.mhl.database.common.util.FoodCategoryData.*;
+import static com.comert.mhl.database.common.util.FoodData.foodSet;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -172,6 +171,7 @@ public class DataBaseITest {
                     .get();
 
             var jsonArray = response1.readEntity(String.class);
+            System.out.println(jsonArray);
 
             ObjectMapper mapper = new ObjectMapper();
 
@@ -220,7 +220,8 @@ public class DataBaseITest {
 
             ObjectMapper mapper = new ObjectMapper();
 
-            final var idAndNameSet = mapper.readValue(jsonArray, new TypeReference<Set<IdAndName>>() {});
+            final var idAndNameSet = mapper.readValue(jsonArray, new TypeReference<Set<IdAndName>>() {
+            });
 
             assertThat(response)
                     .matches(
@@ -236,24 +237,24 @@ public class DataBaseITest {
         @RunAsClient
         @Test
         public void testChildEntities() {
-            Response response = target.path("/listfoodcategorychildentities")
+            Response response = target.path("/find")
                     .queryParam("foodcategoryid", 3)
                     .request(MediaType.APPLICATION_JSON)
                     .get();
 
-            final var childEntities = response.readEntity(HashSet.class);
+            final var foodCategoryWithChildEntities = response.readEntity(FoodCategory.class);
 
             assertThat(response)
                     .matches(
                             r -> r.getStatus() == Response.Status.OK.getStatusCode()
                     );
 
-            assertThat(childEntities)
-                    .hasSize(2);
+            assertThat(foodCategoryWithChildEntities.getFoods())
+                    .hasSize(2)
+                    .containsAll(foodSet());
 
         }
 
-        @Disabled
         @Order(value = 7)
         @RunAsClient
         @Test
@@ -304,7 +305,6 @@ public class DataBaseITest {
                     .matches(e -> e.getMessage().equals("Food Categories could not be found") &&
                             e.getProperty().equals("Food Categories"));
         }
-
     }
 
 }
