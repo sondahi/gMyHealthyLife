@@ -40,7 +40,7 @@ public class FoodCategoryData {
     public static FoodCategory updatedFoodCategory() {
         FoodCategory foodCategory = new FoodCategory();
         foodCategory.setFoodCategoryId(1);
-        foodCategory.setFoodCategoryName("Updated Category");
+        foodCategory.setFoodCategoryName("Updated Food Category");
         return foodCategory;
     }
 
@@ -52,28 +52,33 @@ public class FoodCategoryData {
 
     public static Set<FoodCategory> fullFoodCategorySet() {
         final var foodCategorySet = new HashSet<FoodCategory>();
-        foodCategorySet.add(updatedFoodCategory());
-        foodCategorySet.add(foodCategory2());
-        foodCategorySet.add(foodCategoryWithChildEntities());
+        foodCategorySet.add(foodCategoryWithIdAndName(1,"Updated Food Category"));
+        foodCategorySet.add(foodCategoryWithIdAndName(2,"Food Category 2"));
+        foodCategorySet.add(foodCategoryWithIdAndName(3,"Food Category With Child Entities"));
         return foodCategorySet;
     }
 
     public static Set<FoodCategory> filteredFoodCategorySet() {
         final var foodCategorySet = new HashSet<FoodCategory>();
-        foodCategorySet.add(foodCategory1());
+        foodCategorySet.add(foodCategoryWithIdAndName(1,"Updated Food Category"));
+        foodCategorySet.add(foodCategoryWithIdAndName(2,"Food Category 2"));
         return foodCategorySet;
     }
 
     public static Set<IdAndName> foodCategoryIdAndNames() {
         Set<IdAndName> idAndNameSet = new HashSet<>();
-        final var foodCategory1 = foodCategory1();
-        foodCategory1.setFoodCategoryId(1);
+        final var foodCategory1 = updatedFoodCategory();
         final var foodCategory2 = foodCategory2();
         foodCategory1.setFoodCategoryId(2);
+        final var foodCategoryWithChildEntities = foodCategoryWithChildEntities();
+        foodCategoryWithChildEntities.setFoodCategoryId(3);
         final var idAndName1 = new IdAndName(foodCategory1.getFoodCategoryId(), foodCategory1.getFoodCategoryName());
         final var idAndName2 = new IdAndName(foodCategory2.getFoodCategoryId(), foodCategory2.getFoodCategoryName());
+        final var idAndName3 = new IdAndName(foodCategoryWithChildEntities.getFoodCategoryId(), foodCategoryWithChildEntities.getFoodCategoryName());
+
         idAndNameSet.add(idAndName1);
         idAndNameSet.add(idAndName2);
+        idAndNameSet.add(idAndName3);
         return idAndNameSet;
     }
 
