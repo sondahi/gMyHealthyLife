@@ -301,7 +301,7 @@ public class FoodCategoryServiceImplUTest {
         @Test
         public void testSaveAndFindEntity() {
             final var foodCategory = foodCategory1();
-            final var persistedCategory = persistedFoodCategory();
+            final var persistedCategory = savedFoodCategory();
 
             doNothing().when(repository).saveFoodCategory(foodCategory);
             when(repository.findFoodCategoryById(1)).thenReturn(persistedCategory);
@@ -319,7 +319,7 @@ public class FoodCategoryServiceImplUTest {
         public void testUpdateEntity() {
             final var foodCategory = foodCategory1();
             foodCategory.setFoodCategoryId(1);
-            final var mergedCategory = mergedFoodCategory();
+            final var mergedCategory = updatedFoodCategory();
             when(repository.updateFoodCategory(foodCategory)).thenReturn(mergedCategory);
 
             final var foundCategory = service.updateFoodCategory(foodCategory);
