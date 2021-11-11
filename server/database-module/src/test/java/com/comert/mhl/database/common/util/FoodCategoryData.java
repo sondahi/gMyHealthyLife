@@ -22,11 +22,11 @@ public class FoodCategoryData {
         return foodCategory;
     }
 
-    public static Set<FoodCategory> fullFoodCategorySet() {
-        final var foodCategoryList = new HashSet<FoodCategory>();
-        foodCategoryList.add(foodCategory1());
-        foodCategoryList.add(foodCategory2());
-        return foodCategoryList;
+    public static FoodCategory savedFoodCategory() {
+        FoodCategory foodCategory = new FoodCategory();
+        foodCategory.setFoodCategoryId(1);
+        foodCategory.setFoodCategoryName("Food Category 1");
+        return foodCategory;
     }
 
     public static FoodCategory foodCategoryWithChildEntities() {
@@ -37,10 +37,24 @@ public class FoodCategoryData {
         return foodCategory;
     }
 
+    public static FoodCategory updatedFoodCategory() {
+        FoodCategory foodCategory = new FoodCategory();
+        foodCategory.setFoodCategoryId(1);
+        foodCategory.setFoodCategoryName("Updated Category");
+        return foodCategory;
+    }
+
     public static FoodCategory foodCategoryWithIdAndName(final Integer foodCategoryId, final String foodCategoryName){
         final var foodCategory = new FoodCategory(foodCategoryName);
         foodCategory.setFoodCategoryId(foodCategoryId);
         return foodCategory;
+    }
+
+    public static Set<FoodCategory> fullFoodCategorySet() {
+        final var foodCategorySet = new HashSet<FoodCategory>();
+        foodCategorySet.add(foodCategory1());
+        foodCategorySet.add(foodCategory2());
+        return foodCategorySet;
     }
 
     public static Set<FoodCategory> filteredFoodCategorySet() {
@@ -48,21 +62,6 @@ public class FoodCategoryData {
         foodCategoryList.add(foodCategory1());
         return foodCategoryList;
     }
-
-    public static FoodCategory persistedFoodCategory() {
-        FoodCategory foodCategory = new FoodCategory();
-        foodCategory.setFoodCategoryId(1);
-        foodCategory.setFoodCategoryName("Food Category 1");
-        return foodCategory;
-    }
-
-    public static FoodCategory mergedFoodCategory() {
-        FoodCategory foodCategory = new FoodCategory();
-        foodCategory.setFoodCategoryId(1);
-        foodCategory.setFoodCategoryName("Updated Category");
-        return foodCategory;
-    }
-
 
     public static Set<IdAndName> foodCategoryIdAndNames() {
         Set<IdAndName> idAndNameList = new HashSet<>();
