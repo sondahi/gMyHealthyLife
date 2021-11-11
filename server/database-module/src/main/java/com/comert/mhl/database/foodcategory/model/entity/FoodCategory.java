@@ -1,8 +1,10 @@
 package com.comert.mhl.database.foodcategory.model.entity;
 
 import com.comert.mhl.database.food.model.entity.Food;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.json.bind.annotation.JsonbTypeSerializer;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
