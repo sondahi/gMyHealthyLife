@@ -1,7 +1,12 @@
 package com.comert.mhl.database;
 
 import com.comert.mhl.database.common.model.dto.ExceptionMessage;
+import com.comert.mhl.database.common.model.dto.IdAndName;
+import com.comert.mhl.database.food.model.entity.Food;
 import com.comert.mhl.database.foodcategory.model.entity.FoodCategory;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
@@ -124,16 +129,14 @@ public class DataBaseITest {
                             r -> r.getStatus() == Response.Status.OK.getStatusCode()
                     );
 
-            assertEquals(foundFoodCategory, foodCategoryWithIdAndName(1, foodCategory1().getFoodCategoryName()));
-
+            assertEquals(foundFoodCategory, foodCategory1());
         }
 
         @Order(value = 3)
         @RunAsClient
         @Test
         public void testUpdateEntity() {
-            final var toUpdateFoodCategory = new FoodCategory("Updated Food Category");
-            toUpdateFoodCategory.setFoodCategoryId(1);
+            final var toUpdateFoodCategory = updatedFoodCategory();
 
             Response response1 = target.path("/update")
                     .request(MediaType.APPLICATION_JSON)
@@ -163,12 +166,17 @@ public class DataBaseITest {
         @Order(value = 4)
         @RunAsClient
         @Test
-        public void testListEntities() {
+        public void testListEntities() throws JsonProcessingException {
             Response response1 = target.path("/listfoodcategories")
                     .request(MediaType.APPLICATION_JSON)
                     .get();
 
-            final var foodCategoriesFullSet = response1.readEntity(Set.class);
+            var jsonArray = response1.readEntity(String.class);
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            final var foodCategoriesFullSet = mapper.readValue(jsonArray, new TypeReference<Set<FoodCategory>>() {
+            });
 
             assertThat(response1)
                     .matches(
@@ -176,7 +184,8 @@ public class DataBaseITest {
                     );
 
             assertThat(foodCategoriesFullSet)
-                    .hasSize(3);
+                    .hasSize(3)
+                    .containsAll(fullFoodCategorySet());
 
             Response response2 = target.path("/listfoodcategories")
                     .queryParam("firstresult", 0)
@@ -184,7 +193,10 @@ public class DataBaseITest {
                     .request(MediaType.APPLICATION_JSON)
                     .get();
 
-            final var foodCategoriesFilteredSet = response2.readEntity(Set.class);
+            jsonArray = response2.readEntity(String.class);
+
+            final var foodCategoriesFilteredSet = mapper.readValue(jsonArray, new TypeReference<Set<FoodCategory>>() {
+            });
 
             assertThat(response2)
                     .matches(
@@ -192,26 +204,32 @@ public class DataBaseITest {
                     );
 
             assertThat(foodCategoriesFilteredSet)
-                    .hasSize(2);
+                    .hasSize(2)
+                    .containsAll(filteredFoodCategorySet());
         }
 
         @Order(value = 5)
         @RunAsClient
         @Test
-        public void testListEntitiesByIdAndName() {
+        public void testListEntitiesByIdAndName() throws JsonProcessingException {
             Response response = target.path("/listfoodcategoriesbyidandname")
                     .request(MediaType.APPLICATION_JSON)
                     .get();
 
-            final var idAndNames = response.readEntity(Set.class);
+            final var jsonArray = response.readEntity(String.class);
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            final var idAndNameSet = mapper.readValue(jsonArray, new TypeReference<Set<IdAndName>>() {});
 
             assertThat(response)
                     .matches(
                             r -> r.getStatus() == Response.Status.OK.getStatusCode()
                     );
 
-            assertThat(idAndNames)
-                    .hasSize(3);
+            assertThat(idAndNameSet)
+                    .hasSize(3)
+                    .containsAll(foodCategoryIdAndNames());
         }
 
         @Order(value = 6)
@@ -235,6 +253,7 @@ public class DataBaseITest {
 
         }
 
+        @Disabled
         @Order(value = 7)
         @RunAsClient
         @Test

@@ -6,8 +6,11 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class IdAndName {
 
-    private final Integer value;
-    private final String label;
+    private Integer value;
+    private String label;
+
+    public IdAndName() {
+    }
 
     public IdAndName(Integer value, String label) {
         this.value = value;
@@ -18,8 +21,16 @@ public class IdAndName {
         return value;
     }
 
+    public void setValue(Integer value) {
+        this.value = value;
+    }
+
     public String getLabel() {
         return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 
     @Override
