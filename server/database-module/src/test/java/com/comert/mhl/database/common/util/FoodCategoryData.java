@@ -44,7 +44,7 @@ public class FoodCategoryData {
         return foodCategory;
     }
 
-    public static FoodCategory foodCategoryWithIdAndName(final Integer foodCategoryId, final String foodCategoryName){
+    public static FoodCategory foodCategoryWithIdAndName(final Integer foodCategoryId, final String foodCategoryName) {
         final var foodCategory = new FoodCategory(foodCategoryName);
         foodCategory.setFoodCategoryId(foodCategoryId);
         return foodCategory;
@@ -52,28 +52,29 @@ public class FoodCategoryData {
 
     public static Set<FoodCategory> fullFoodCategorySet() {
         final var foodCategorySet = new HashSet<FoodCategory>();
-        foodCategorySet.add(foodCategory1());
+        foodCategorySet.add(updatedFoodCategory());
         foodCategorySet.add(foodCategory2());
+        foodCategorySet.add(foodCategoryWithChildEntities());
         return foodCategorySet;
     }
 
     public static Set<FoodCategory> filteredFoodCategorySet() {
-        final var foodCategoryList = new HashSet<FoodCategory>();
-        foodCategoryList.add(foodCategory1());
-        return foodCategoryList;
+        final var foodCategorySet = new HashSet<FoodCategory>();
+        foodCategorySet.add(foodCategory1());
+        return foodCategorySet;
     }
 
     public static Set<IdAndName> foodCategoryIdAndNames() {
-        Set<IdAndName> idAndNameList = new HashSet<>();
+        Set<IdAndName> idAndNameSet = new HashSet<>();
         final var foodCategory1 = foodCategory1();
         foodCategory1.setFoodCategoryId(1);
         final var foodCategory2 = foodCategory2();
         foodCategory1.setFoodCategoryId(2);
         final var idAndName1 = new IdAndName(foodCategory1.getFoodCategoryId(), foodCategory1.getFoodCategoryName());
         final var idAndName2 = new IdAndName(foodCategory2.getFoodCategoryId(), foodCategory2.getFoodCategoryName());
-        idAndNameList.add(idAndName1);
-        idAndNameList.add(idAndName2);
-        return idAndNameList;
+        idAndNameSet.add(idAndName1);
+        idAndNameSet.add(idAndName2);
+        return idAndNameSet;
     }
 
 }
