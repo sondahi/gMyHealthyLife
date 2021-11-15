@@ -6,6 +6,7 @@
 server/application-module/target
 server/web-module/target
 server/database-module/target
+server/database-module/src/main/resources/sql/load.sql
 server/mail-module/target
 server/payment-module/target
 
