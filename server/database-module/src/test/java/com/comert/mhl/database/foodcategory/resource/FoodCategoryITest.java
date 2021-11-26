@@ -1,4 +1,4 @@
-package com.comert.mhl.database;
+package com.comert.mhl.database.foodcategory.resource;
 
 import com.comert.mhl.database.common.model.dto.ExceptionMessage;
 import com.comert.mhl.database.common.model.dto.IdAndName;
@@ -33,7 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @EnabledOnJre(JRE.JAVA_11)
 @ExtendWith(ArquillianExtension.class)
 @TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
-public class DataBaseITest {
+public class FoodCategoryITest {
 
     @Deployment(testable = false)
     public static WebArchive createDeployment() {
@@ -64,7 +64,7 @@ public class DataBaseITest {
     @Nested
     @TestMethodOrder(value = MethodOrderer.OrderAnnotation.class)
     @TestInstance(value = TestInstance.Lifecycle.PER_CLASS)
-    public class FoodCategoryITest {
+    public class CRUDTest {
 
         @BeforeEach
         public void setUpScenario() {
