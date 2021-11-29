@@ -12,11 +12,15 @@ import java.time.LocalDateTime;
  * Bu işlemlerin hepsi user üzerinden mealrecordu false olanlar ile yapılacak. Burda index falan yapmıyacağız. Zaten fk user
  * indexli
 */
-//@Entity
+@Entity
 @Table(name = "UserMealRecord")
 @AttributeOverride(name="entityId", column=@Column(name="userMealRecordId"))
 @Cacheable(value = false)
 public class UserMealRecord extends Component implements MealTransfer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer userMealRecordId;
 
     @Column(name = "savedTime", columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime savedTime;
@@ -33,6 +37,14 @@ public class UserMealRecord extends Component implements MealTransfer {
     private User user;
 
     public UserMealRecord() {}
+
+    public Integer getUserMealRecordId() {
+        return userMealRecordId;
+    }
+
+    public void setUserMealRecordId(Integer userMealRecordId) {
+        this.userMealRecordId = userMealRecordId;
+    }
 
     public LocalDateTime getSavedTime() {
         return this.savedTime;

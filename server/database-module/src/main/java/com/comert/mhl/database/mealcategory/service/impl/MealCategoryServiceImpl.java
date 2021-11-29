@@ -8,7 +8,7 @@ import jakarta.ejb.*;
 import jakarta.inject.Inject;
 import jakarta.validation.Validator;
 
-import java.util.List;
+import java.util.Set;
 
 @Local(MealCategoryService.class)
 @Stateless(name = "MealCategoryServiceEJB")
@@ -22,36 +22,37 @@ public class MealCategoryServiceImpl implements MealCategoryService {
     private Validator validator;
 
     @Override
-    public MealCategory findMealCategoryById(Long mealCategoryId) {
-        return null;
+    public MealCategory findMealCategoryById(Integer mealCategoryId) {
+        return mealCategoryRepository.findMealCategoryById(mealCategoryId);
     }
 
     @Override
     public void saveMealCategory(MealCategory mealCategory) {
-        mealCategoryRepository.persistEntity(mealCategory);
+        mealCategoryRepository.saveMealCategory(mealCategory);
     }
 
     @Override
     public MealCategory updateMealCategory(MealCategory mealCategory) {
-        return mealCategoryRepository.mergeEntity(mealCategory);
+        return mealCategoryRepository.updateMealCategory(mealCategory);
     }
 
     @Override
-    public void removeMealCategory(MealCategory mealCategory) {
-        mealCategoryRepository.removeEntity(mealCategory);
+    public void deleteMealCategory(final Integer mealCategoryId) {
+        mealCategoryRepository.deleteMealCategory(mealCategoryId);
     }
 
     @Override
-    public List<MealCategory> listMealCategories() {
-return null;    }
-
-    @Override
-    public List<MealCategory> listMealCategories(int firstResult, int maxResult) {
-        return null;
+    public Set<MealCategory> listMealCategories() {
+        return mealCategoryRepository.listMealCategories();
     }
 
     @Override
-    public List<IdAndName> listMealCategoriesByIdAndName() {
-        return mealCategoryRepository.listEntitiesByIdAndName();
+    public Set<MealCategory> listMealCategories(int firstResult, int maxResult) {
+        return mealCategoryRepository.listMealCategories(firstResult, maxResult);
+    }
+
+    @Override
+    public Set<IdAndName> listMealCategoriesByIdAndName() {
+        return mealCategoryRepository.listMealCategoriesByIdAndName();
     }
 }

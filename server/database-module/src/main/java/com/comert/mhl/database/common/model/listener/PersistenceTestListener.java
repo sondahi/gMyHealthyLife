@@ -1,9 +1,10 @@
 package com.comert.mhl.database.common.model.listener;
 
-import com.comert.mhl.database.common.model.entity.GenericEntity;
 import jakarta.persistence.*;
 
 public class PersistenceTestListener {
+
+    /*
 
     private static void test(String template, Object... arguments) {
         System.out.printf(template, arguments);
@@ -39,5 +40,7 @@ public class PersistenceTestListener {
     public void onPostRemove(GenericEntity baseEntity) {
         test("Entity : %s, EntityId : %d removed", baseEntity.getClass().getSimpleName(), baseEntity.getEntityId());
     }
+
+     */
 
 }

@@ -29,7 +29,7 @@ import java.io.Serializable;
                 }
         ),
         @NamedQuery(
-                name = "Food.listFoodsByIdAndName",
+                name = "Meal.listMealsByIdAndName",
                 query = "select new com.comert.mhl.database.common.model.dto.IdAndName(m.mealId,m.mealName) from Meal as m",
                 hints = {
                         @QueryHint(
@@ -116,24 +116,20 @@ public class Meal extends Component implements Serializable {
 
         Meal meal = (Meal) o;
 
-        return new EqualsBuilder()
-                .append(getMealName(), meal.getMealName())
-                .isEquals();
+        return new EqualsBuilder().append(getMealId(), meal.getMealId()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37)
-                .append(mealName)
-                .toHashCode();
+        return new HashCodeBuilder(17, 37).append(getMealId()).toHashCode();
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .append("mealId", mealId)
-                .append("mealName", mealName)
-                .append("mealCategoryId", mealCategory.getMealCategoryId())
-                .toString();
+        return "Meal{" +
+                "mealId=" + mealId +
+                ", mealName='" + mealName + '\'' +
+                ", mealCategoryId=" + mealCategory.getMealCategoryId() +
+                '}';
     }
 }

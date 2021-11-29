@@ -1,19 +1,15 @@
-package com.comert.mhl.mail.service.ejb;
+package com.comert.mhl.mail.service.impl;
 
 import com.comert.mhl.mail.mail.Mail;
 import com.comert.mhl.mail.mailsender.MessageProducer;
-import com.comert.mhl.mail.service.local.MailServiceLocal;
-import com.comert.mhl.mail.service.remote.MailServiceRemote;
-
+import com.comert.mhl.mail.service.MailService;
 import jakarta.ejb.Local;
-import jakarta.ejb.Remote;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 
-@Remote(MailServiceRemote.class)
-@Local(MailServiceLocal.class)
+@Local(MailService.class)
 @Stateless(name = "MailServiceEJB")
-public class MailServiceBean implements MailServiceLocal, MailServiceRemote {
+public class MailServiceImpl implements MailService {
 
     @Inject
     private MessageProducer messageProducer;

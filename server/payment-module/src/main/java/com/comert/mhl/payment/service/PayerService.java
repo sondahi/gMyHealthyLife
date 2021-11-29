@@ -1,4 +1,4 @@
-package com.comert.mhl.payment.service.generic;
+package com.comert.mhl.payment.service;
 
 import com.comert.mhl.payment.dto.Order;
 

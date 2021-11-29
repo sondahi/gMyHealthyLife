@@ -1,6 +1,7 @@
 package com.comert.mhl.database.meal.service.impl;
 
 import com.comert.mhl.database.common.model.dto.IdAndName;
+import com.comert.mhl.database.food.model.entity.Food;
 import com.comert.mhl.database.meal.model.entity.Meal;
 import com.comert.mhl.database.meal.repository.MealRepository;
 import com.comert.mhl.database.meal.service.MealService;
@@ -22,8 +23,9 @@ public class MealServiceImpl implements MealService {
     private Validator validator;
 
     @Override
-    public Meal findMealById(Long mealId) {
-return null;    }
+    public Meal findMealById(Integer mealId) {
+        return mealRepository.findMealById(mealId);
+    }
 
     @Override
     public void saveMeal(Meal meal) {
@@ -42,16 +44,16 @@ return null;    }
 
     @Override
     public List<Meal> listMeals() {
-        return null;
+        return mealRepository.listMeals();
     }
 
     @Override
     public List<Meal> listMeals(int firstResult, int maxResult) {
-        return null;
+        return mealRepository.listMeals(firstResult, maxResult);
     }
 
     @Override
     public List<IdAndName> listMealsByIdAndName() {
-        return mealRepository.listEntitiesByIdAndName();
+        return mealRepository.listMealsByIdAndName();
     }
 }

@@ -1,23 +1,21 @@
-package com.comert.mhl.payment.service.ejb;
+package com.comert.mhl.payment.service.impl;
 
 import com.comert.mhl.payment.dto.Order;
 import com.comert.mhl.payment.payer.Payer;
-import com.comert.mhl.payment.service.local.PayPalServiceLocal;
-import com.comert.mhl.payment.service.remote.PayPalServiceRemote;
+import com.comert.mhl.payment.service.PayPalService;
 import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
-
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.PreDestroy;
-import jakarta.ejb.*;
+import jakarta.ejb.Local;
+import jakarta.ejb.Remove;
+import jakarta.ejb.Stateful;
 import jakarta.enterprise.inject.Default;
 import jakarta.inject.Inject;
 
-@Remote(value = PayPalServiceRemote.class)
-@Local(value = PayPalServiceLocal.class)
-@Stateful (name = "PayPalServiceEJB")
-public class PayPalServiceBean implements PayPalServiceLocal, PayPalServiceRemote {
+@Local(value = PayPalService.class)
+@Stateful(name = "PayPalServiceEJB")
+public class PayPalServiceImpl implements PayPalService {
 
     private Payment payment;
 
@@ -26,16 +24,16 @@ public class PayPalServiceBean implements PayPalServiceLocal, PayPalServiceRemot
     private Payer payer;
 
     @PostConstruct
-    private void onConstruct(){
-        payment = new Payment (  );
+    private void onConstruct() {
+        payment = new Payment();
     }
 
     @Override
     public String getApprovalLink(Order order, String cancelUrl, String successUrl) {
         try {
             payment = payer.createPayment(order, cancelUrl, successUrl);
-            for(Links link:payment.getLinks()) {
-                if(link.getRel().equals("approval_url")) {
+            for (Links link : payment.getLinks()) {
+                if (link.getRel().equals("approval_url")) {
                     return link.getHref();
                 }
             }
@@ -60,6 +58,6 @@ public class PayPalServiceBean implements PayPalServiceLocal, PayPalServiceRemot
 
     @Remove
     @Override
-    public void removeEJB ( ) {
+    public void removeEJB() {
     }
 }

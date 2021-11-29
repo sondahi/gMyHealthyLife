@@ -2,7 +2,6 @@ package com.comert.mhl.web.controller;
 
 import com.comert.mhl.database.common.model.dto.Authentication;
 import com.comert.mhl.payment.dto.Order;
-import com.comert.mhl.payment.service.local.PayPalServiceLocal;
 import com.comert.mhl.web.controller.util.FacesUtils;
 
 import jakarta.annotation.PostConstruct;
@@ -34,7 +33,7 @@ public class PaymentBean implements Serializable {
     private Order order;
 
     @EJB
-    private PayPalServiceLocal service;
+    private PayPalService service;
 
     private String conversionId;
 

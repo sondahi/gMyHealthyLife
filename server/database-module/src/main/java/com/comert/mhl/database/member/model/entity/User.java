@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-//@Entity
+@Entity
 @Table(name = "User")
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "FK_User_Member"),referencedColumnName = "memberId")
 @NamedQueries({

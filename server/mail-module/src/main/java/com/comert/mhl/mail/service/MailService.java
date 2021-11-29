@@ -1,4 +1,4 @@
-package com.comert.mhl.mail.service.generic;
+package com.comert.mhl.mail.service;
 
 import com.comert.mhl.mail.mail.Mail;
 

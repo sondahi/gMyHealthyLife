@@ -16,9 +16,7 @@ public interface MemberService {
 
     Member updateMember(Member member);
 
-    void removeMember(Member member);
-
-    List<Member> listMembers();
+    void deleteMember(final Long memberId);
 
     List<Member> listMembers(int firstResult, int maxResult);
 

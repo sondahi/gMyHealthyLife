@@ -4,7 +4,7 @@ import com.comert.mhl.database.meal.model.entity.Meal;
 import jakarta.persistence.*;
 import java.util.List;
 
-//@Entity
+@Entity
 @Table(name = "Nutritionist")
 @PrimaryKeyJoinColumn(foreignKey = @ForeignKey(name = "FK_AdminNutritionist_Member"), referencedColumnName = "memberId")
 @NamedQueries({

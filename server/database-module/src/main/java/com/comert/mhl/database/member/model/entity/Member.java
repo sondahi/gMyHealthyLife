@@ -1,27 +1,22 @@
 package com.comert.mhl.database.member.model.entity;
 
-import com.comert.mhl.database.common.model.entity.GenericEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
-//@Entity
+@Entity
 @Table( name = "Member",
         uniqueConstraints = {@UniqueConstraint(name = "UC_Member_memberEmail", columnNames = "memberEmail")},
         indexes = {@Index(name = "I_MemberAuthentication", columnList = "memberEmail,memberPassword")}
 )
 @Cacheable(value = false)
-//@AttributeOverride(name="entityId", column=@Column(name="memberId"))
 @Inheritance(strategy = InheritanceType.JOINED )
-@NamedQueries({
-        @NamedQuery(name = "Member.memberCount", query = "select count(m) from Member m")
-})
 public abstract class Member implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer memberId;
+    private Long memberId;
 
     @Version
     private int version;
@@ -40,11 +35,11 @@ public abstract class Member implements Serializable {
 
     public Member() {}
 
-    public Integer getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 
-    public void setMemberId(Integer memberId) {
+    public void setMemberId(Long memberId) {
         this.memberId = memberId;
     }
 

@@ -1,57 +1,86 @@
 package com.comert.mhl.database.mealcategory.repository;
 
 import com.comert.mhl.database.common.model.dto.IdAndName;
-import com.comert.mhl.database.common.repository.ByIdAndNameListable;
-import com.comert.mhl.database.common.repository.impl.GenericCRUDRepositoryImpl;
 import com.comert.mhl.database.mealcategory.model.entity.MealCategory;
+import com.comert.mhl.database.mealcategory.service.MealCategoryService;
+import jakarta.annotation.Resource;
 import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Stateless
 @LocalBean
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
-public class MealCategoryRepository{
+public class MealCategoryRepository implements MealCategoryService {
 
-    private final String LIST_MEALCATEGORIES_BY_ID_AND_NAME = "select new com.comert.mhl.database.common.model.dto.IdAndName(mg.mealCategoryId,mg.mealCategoryName)" +
-            " from MealCategory mg";
-
-    public MealCategoryRepository() {
-    }
+    @Resource
+    private SessionContext sessionContext;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    protected Class<MealCategory> getChildClass() {
-        return MealCategory.class;
+
+    public MealCategoryRepository() {
     }
 
+    public MealCategoryRepository(SessionContext sessionContext, EntityManager entityManager) {
+        this.sessionContext = sessionContext;
+        this.entityManager = entityManager;
+    }
+
+    @Override
+    public MealCategory findMealCategoryById(Integer mealCategoryId) {
+        return entityManager.find(MealCategory.class, mealCategoryId);
+    }
+
+    @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public void persistEntity(MealCategory entity) {
-
-        entityManager.persist(entity);
+    public void saveMealCategory(MealCategory mealCategory) {
+        entityManager.persist(mealCategory);
     }
 
+    @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public MealCategory mergeEntity(MealCategory entity) {
-        return entityManager.merge(entity);
+    public MealCategory updateMealCategory(MealCategory mealCategory) {
+        return entityManager.merge(mealCategory);
     }
 
+    @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public void refreshEntity(MealCategory entity) {
-        entityManager.refresh(entity);
+    public void deleteMealCategory(final Integer mealCategoryId) {
+        final MealCategory toDeleteMealCategory = entityManager.getReference(MealCategory.class,mealCategoryId);
+        entityManager.remove(toDeleteMealCategory);
     }
 
-    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public void removeEntity(MealCategory entity) {
-        entityManager.remove(entity);
+    @Override
+    public Set<MealCategory> listMealCategories() {
+        Collection<MealCategory> mealCategories = entityManager
+                .createNamedQuery("MealCategory.listMealCategories", MealCategory.class)
+                .getResultList();
+        return new HashSet<>(mealCategories);
     }
 
-    public List<IdAndName> listEntitiesByIdAndName() {
-        Query query = entityManager.createQuery(LIST_MEALCATEGORIES_BY_ID_AND_NAME);
-        return query.getResultList();
+    @Override
+    public Set<MealCategory> listMealCategories(int firstResult, int maxResult) {
+        Collection<MealCategory> mealCategories = entityManager
+                .createNamedQuery("MealCategory.listMealCategories", MealCategory.class)
+                .setFirstResult(firstResult)
+                .setMaxResults(maxResult)
+                .getResultList();
+        return new HashSet<>(mealCategories);
     }
+
+    @Override
+    public Set<IdAndName> listMealCategoriesByIdAndName() {
+        Collection<IdAndName> idAndNames = entityManager
+                .createNamedQuery("MealCategory.listMealCategoriesByIdAndName", IdAndName.class)
+                .getResultList();
+        return new HashSet<>(idAndNames);
+    }
+
+
 }

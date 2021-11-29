@@ -4,21 +4,22 @@ import com.comert.mhl.database.common.model.dto.IdAndName;
 import com.comert.mhl.database.mealcategory.model.entity.MealCategory;
 
 import java.util.List;
+import java.util.Set;
 
 public interface MealCategoryService {
 
-    MealCategory findMealCategoryById(Long mealCategoryId);
+    MealCategory findMealCategoryById(Integer mealCategoryId);
 
     void saveMealCategory(MealCategory mealCategory);
 
     MealCategory updateMealCategory(MealCategory mealCategory);
 
-    void removeMealCategory(MealCategory mealCategory);
+    void deleteMealCategory(final Integer mealCategoryId);
 
-    List<MealCategory> listMealCategories();
+    Set<MealCategory> listMealCategories();
 
-    List<MealCategory> listMealCategories(int firstResult, int maxResult);
+    Set<MealCategory> listMealCategories(int firstResult, int maxResult);
 
-    List<IdAndName> listMealCategoriesByIdAndName();
+    Set<IdAndName> listMealCategoriesByIdAndName();
 
 }

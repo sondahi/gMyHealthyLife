@@ -1,11 +1,8 @@
 package com.comert.mhl.database.food.repository;
 
 import com.comert.mhl.database.common.model.dto.IdAndName;
-import com.comert.mhl.database.common.repository.ByIdAndNameListable;
-import com.comert.mhl.database.common.repository.impl.GenericCRUDRepositoryImpl;
 import com.comert.mhl.database.food.model.entity.Food;
 import com.comert.mhl.database.food.service.FoodService;
-import com.comert.mhl.database.foodcategory.model.entity.FoodCategory;
 import jakarta.annotation.Resource;
 import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
@@ -18,28 +15,30 @@ import java.util.List;
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
 public class FoodRepository implements FoodService {
 
-    @PersistenceContext
-    private EntityManager entityManager;
 
     @Resource
     private SessionContext sessionContext;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
 
     public FoodRepository() {
     }
 
     public FoodRepository(final EntityManager entityManager, final SessionContext sessionContext) {
-        this.entityManager=entityManager;
+        this.entityManager = entityManager;
         this.sessionContext = sessionContext;
     }
 
     @Override
     public Food findFoodById(Integer foodId) {
-        return entityManager.find(Food.class,foodId);
+        return entityManager.find(Food.class, foodId);
     }
 
     @Override
     public void saveFood(Food food) {
-entityManager.persist(food);
+        entityManager.persist(food);
     }
 
     @Override
@@ -49,7 +48,7 @@ entityManager.persist(food);
 
     @Override
     public void removeFood(Integer foodId) {
-        final var foodCategory = entityManager.getReference(Food.class,foodId);
+        final var foodCategory = entityManager.getReference(Food.class, foodId);
         entityManager.remove(foodCategory);
     }
 

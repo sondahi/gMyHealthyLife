@@ -1,9 +1,5 @@
 package com.comert.mhl.database.mealcategory.model.entity;
 
-import com.comert.mhl.database.common.model.entity.GenericEntity;
-
-import com.comert.mhl.database.food.model.entity.Food;
-import com.comert.mhl.database.foodcategory.model.entity.FoodCategory;
 import com.comert.mhl.database.meal.model.entity.Meal;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -18,6 +14,7 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.QueryHints;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -69,7 +66,7 @@ public class MealCategory implements Serializable {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private Set<Meal> meals = new HashSet<>();
+    private List<Meal> meals = new ArrayList<>();
 
     public MealCategory() {}
 
@@ -97,11 +94,11 @@ public class MealCategory implements Serializable {
         this.mealCategoryName = mealCategoryName;
     }
 
-    public Set<Meal> getMeals() {
+    public List<Meal> getMeals() {
         return meals;
     }
 
-    public void setMeals(Set<Meal> meals) {
+    public void setMeals(List<Meal> meals) {
         this.meals = meals;
     }
 

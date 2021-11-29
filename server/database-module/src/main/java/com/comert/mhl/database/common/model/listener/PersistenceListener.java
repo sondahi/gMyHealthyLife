@@ -1,6 +1,5 @@
 package com.comert.mhl.database.common.model.listener;
 
-import com.comert.mhl.database.common.model.entity.GenericEntity;
 import jakarta.persistence.*;
 
 import java.io.IOException;
@@ -8,11 +7,14 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
-
+/*
 /*
  * sadece remove olursa ( mail recordlar hariç) trigger gibi başka tabloya yazacağız.
  */
+
 public class PersistenceListener {
+
+    /*
 
     private static Logger logger = Logger.getLogger(GenericEntity.class.getName());
     private static final String FILE_PATTERN = GenericEntity.class.getName() + "-%g.log.txt";
@@ -61,5 +63,6 @@ public class PersistenceListener {
     @PostRemove
     public void onPostRemove(GenericEntity baseEntity) {
     }
+    */
 
 }

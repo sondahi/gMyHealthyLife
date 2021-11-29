@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MealService {
 
-    Meal findMealById(Long mealId);
+    Meal findMealById(Integer mealId);
 
     void saveMeal(Meal meal);
 

@@ -1,24 +1,17 @@
 package com.comert.mhl.database.meal.repository;
 
 import com.comert.mhl.database.common.model.dto.IdAndName;
-import com.comert.mhl.database.common.repository.ByIdAndNameListable;
-import com.comert.mhl.database.common.repository.impl.GenericCRUDRepositoryImpl;
 import com.comert.mhl.database.meal.model.entity.Meal;
 import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 
 import java.util.List;
 
 @Stateless
 @LocalBean
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
-public class MealRepository{
-
-    private final String LIST_MEALS_BY_ID_AND_NAME = "select new com.comert.mhl.database.common.model.dto.IdAndName(m.mealId,m.mealName)" +
-            " from Meal m";
-
+public class MealRepository {
 
     public MealRepository() {
     }
@@ -26,8 +19,8 @@ public class MealRepository{
     @PersistenceContext
     private EntityManager entityManager;
 
-    protected Class<Meal> getChildClass() {
-        return Meal.class;
+    public Meal findMealById(Integer mealId) {
+        return entityManager.find(Meal.class, mealId);
     }
 
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
@@ -50,8 +43,25 @@ public class MealRepository{
         entityManager.remove(entity);
     }
 
-    public List<IdAndName> listEntitiesByIdAndName() {
-        Query query = entityManager.createQuery(LIST_MEALS_BY_ID_AND_NAME);
-        return query.getResultList();
+    public List<Meal> listMeals() {
+        return entityManager
+                .createNamedQuery("Meal.listMeals", Meal.class)
+                .getResultList();
     }
+
+    public List<Meal> listMeals(int firstResult, int maxResult) {
+        return entityManager
+                .createNamedQuery("Meal.listMeals", Meal.class)
+                .setFirstResult(firstResult)
+                .setMaxResults(maxResult)
+                .getResultList();
+    }
+
+    public List<IdAndName> listMealsByIdAndName() {
+        return entityManager
+                .createNamedQuery("Meal.listMealsByIdAndName", IdAndName.class)
+                .getResultList();
+    }
+
+
 }
