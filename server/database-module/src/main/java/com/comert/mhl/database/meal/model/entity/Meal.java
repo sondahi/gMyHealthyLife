@@ -3,17 +3,43 @@ package com.comert.mhl.database.meal.model.entity;
 
 import com.comert.mhl.database.common.model.entity.component.Component;
 import com.comert.mhl.database.mealcategory.model.entity.MealCategory;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.QueryHints;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "Meal")
 @Cacheable(value = true)
-//@AttributeOverride(name="entityId", column=@Column(name="mealId"))
 @NamedQueries({
-        @NamedQuery(name = "Meal.mealCount", query = "select count(m) from Meal m")
+        @NamedQuery(
+                name = "Meal.listMeals",
+                query = "select m from Meal as m",
+                hints = {
+                        @QueryHint(
+                                name = QueryHints.CACHEABLE,
+                                value = "true"
+                        )
+                }
+        ),
+        @NamedQuery(
+                name = "Food.listFoodsByIdAndName",
+                query = "select new com.comert.mhl.database.common.model.dto.IdAndName(m.mealId,m.mealName) from Meal as m",
+                hints = {
+                        @QueryHint(
+                                name = QueryHints.CACHEABLE,
+                                value = "true"
+                        )
+                }
+        )
 })
+
 public class Meal extends Component implements Serializable {
 
     @Id
@@ -23,8 +49,24 @@ public class Meal extends Component implements Serializable {
     @Version
     private int version;
 
-    @Column(name = "mealName", length = 50, nullable = false)
+    @NotNull
+    @Size(min = 2, max = 50)
+    @Column(name = "mealName")
     private String mealName;
+
+    private String logoPath;
+
+    @JsonBackReference
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY) // cache'de hit sayısını bir azaltıyoruz.
+    @JoinColumn(
+            name = "mealCategoryId",
+            foreignKey = @ForeignKey(name = "FK_Meal_MealCategory")
+    )
+    private MealCategory mealCategory;
+
+    public Meal() {
+    }
 
     public Integer getMealId() {
         return mealId;
@@ -42,48 +84,56 @@ public class Meal extends Component implements Serializable {
         this.version = version;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "mealCategoryId",
-            nullable = false,
-            foreignKey = @ForeignKey(name = "FK_Meal_MealCategory")
-    )
-
-
-    private MealCategory mealCategory;
-
-    public Meal() {
-    }
-
     public String getMealName() {
-        return this.mealName;
+        return mealName;
     }
 
-    public void setMealName(final String mealName) {
+    public void setMealName(String mealName) {
         this.mealName = mealName;
     }
 
-    public MealCategory getMealCategory() {
-        return this.mealCategory;
+    public String getLogoPath() {
+        return logoPath;
     }
 
-    public void setMealCategory(final MealCategory mealCategory) {
+    public void setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
+    }
+
+    public MealCategory getMealCategory() {
+        return mealCategory;
+    }
+
+    public void setMealCategory(MealCategory mealCategory) {
         this.mealCategory = mealCategory;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+
+        if (!(o instanceof Meal)) return false;
 
         Meal meal = (Meal) o;
 
-        return getMealId().equals(meal.getMealId());
+        return new EqualsBuilder()
+                .append(getMealName(), meal.getMealName())
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return getMealId().hashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(mealName)
+                .toHashCode();
     }
 
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("mealId", mealId)
+                .append("mealName", mealName)
+                .append("mealCategoryId", mealCategory.getMealCategoryId())
+                .toString();
+    }
 }

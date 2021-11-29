@@ -2,21 +2,50 @@ package com.comert.mhl.database.mealcategory.model.entity;
 
 import com.comert.mhl.database.common.model.entity.GenericEntity;
 
+import com.comert.mhl.database.food.model.entity.Food;
+import com.comert.mhl.database.foodcategory.model.entity.FoodCategory;
 import com.comert.mhl.database.meal.model.entity.Meal;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.QueryHints;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(
-        name = "MealCategory",
-        uniqueConstraints = {@UniqueConstraint(name = "UC_MealCategory_mealCategoryName",columnNames = "mealCategoryName")}
-)
-@Cacheable(value = true)
-//@AttributeOverride(name="entityId", column=@Column(name="mealCategoryId"))
+@Table(name = "MealCategory")
+@Cacheable
 @NamedQueries({
-        @NamedQuery(name = "MealCategory.mealCategoryCount", query = "select count(mg) from MealCategory mg")
+        @NamedQuery(
+                name = "MealCategory.listMealCategories",
+                query = "select mg from MealCategory as mg",
+                hints = {
+                        @QueryHint(
+                                name = QueryHints.CACHEABLE,
+                                value = "true"
+                        )
+                }
+        ),
+        @NamedQuery(
+                name = "MealCategory.listMealCategoriesByIdAndName",
+                query = "select new com.comert.mhl.database.common.model.dto.IdAndName(mg.mealCategoryId,mg.mealCategoryName) from MealCategory as mg",
+                hints = {
+                        @QueryHint(
+                                name = QueryHints.CACHEABLE,
+                                value = "true"
+                        )
+                }
+        )
 })
 public class MealCategory implements Serializable {
 
@@ -27,16 +56,20 @@ public class MealCategory implements Serializable {
     @Version
     private int version;
 
-    @Column(name = "mealCategoryName", length = 50, nullable = false)
+    @NotNull(message = "Field can not be null")
+    @Size(min = 2, max = 50, message = "Field size must be between 2 and 50 characters")
+    @Column(name = "mealCategoryName",unique = true)
     private String mealCategoryName;
 
+    @JsonManagedReference
+    @org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.TRANSACTIONAL) // by JTA
+    @Fetch(value = FetchMode.JOIN) // avoiding from lazy-initialization exception
     @OneToMany(
-            fetch = FetchType.LAZY,
             mappedBy = "mealCategory",
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<Meal> meals;
+    private Set<Meal> meals = new HashSet<>();
 
     public MealCategory() {}
 
@@ -57,38 +90,56 @@ public class MealCategory implements Serializable {
     }
 
     public String getMealCategoryName() {
-        return this.mealCategoryName;
+        return mealCategoryName;
     }
 
-    public void setMealCategoryName(final String mealCategoryName) {
+    public void setMealCategoryName(String mealCategoryName) {
         this.mealCategoryName = mealCategoryName;
     }
 
-    public List<Meal> getMeals() {
-        return this.meals;
+    public Set<Meal> getMeals() {
+        return meals;
     }
 
-    public void setMeals(final List<Meal> meals) {
+    public void setMeals(Set<Meal> meals) {
         this.meals = meals;
     }
 
-    public void addMeal(Meal meal){
-        meals.add(meal);
+    public void addMeal(Meal meal) {
         meal.setMealCategory(this);
+        meals.add(meal);
+    }
+
+    public void removeFood(Meal meal) {
+        meals.remove(meal);
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+
+        if (!(o instanceof MealCategory)) return false;
 
         MealCategory that = (MealCategory) o;
 
-        return getMealCategoryId().equals(that.getMealCategoryId());
+        return new EqualsBuilder()
+                .append(getMealCategoryName(), that.getMealCategoryName())
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return getMealCategoryId().hashCode();
+        return new HashCodeBuilder(17, 37)
+                .append(getMealCategoryName())
+                .toHashCode();
     }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("mealCategoryId", mealCategoryId)
+                .append("mealCategoryName", mealCategoryName)
+                .toString();
+    }
+
 }
