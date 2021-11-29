@@ -1,6 +1,7 @@
 package com.comert.mhl.database.member.repository;
 
 import com.comert.mhl.database.common.model.dto.Authentication;
+import com.comert.mhl.database.mealcategory.model.entity.MealCategory;
 import com.comert.mhl.database.member.model.entity.Member;
 import com.comert.mhl.database.member.service.MemberService;
 import jakarta.annotation.Resource;
@@ -11,7 +12,9 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Stateless
 @LocalBean
@@ -42,7 +45,7 @@ public class MemberRepository implements MemberService {
 
     @Override
     public Member findMemberById(Long memberId) {
-        return entityManager.find(Member.class,memberId);
+        return entityManager.find(Member.class, memberId);
     }
 
     @Override
@@ -60,13 +63,18 @@ public class MemberRepository implements MemberService {
     @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
     public void deleteMember(final Long memberId) {
-        final Member member = entityManager.getReference(Member.class,memberId);
+        final Member member = entityManager.getReference(Member.class, memberId);
         entityManager.remove(member);
     }
 
     @Override
-    public List<Member> listMembers(int firstResult, int maxResult) {
-        return null;
+    public Set<Member> listMembers(int firstResult, int maxResult) {
+        Collection<Member> members = entityManager
+                .createNamedQuery("Member.listMembers", Member.class)
+                .setFirstResult(firstResult)
+                .setMaxResults(maxResult)
+                .getResultList();
+        return new HashSet<>(members);
     }
 
     @Override

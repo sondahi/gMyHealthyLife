@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.QueryHints;
 
 import java.io.Serializable;
@@ -51,7 +50,7 @@ public class Meal extends Component implements Serializable {
 
     @NotNull
     @Size(min = 2, max = 50)
-    @Column(name = "mealName")
+    @Column(name = "mealName", unique = true)
     private String mealName;
 
     private String logoPath;
@@ -116,12 +115,12 @@ public class Meal extends Component implements Serializable {
 
         Meal meal = (Meal) o;
 
-        return new EqualsBuilder().append(getMealId(), meal.getMealId()).isEquals();
+        return new EqualsBuilder().append(getMealName(), meal.getMealName()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(getMealId()).toHashCode();
+        return new HashCodeBuilder(17, 37).append(getMealName()).toHashCode();
     }
 
     @Override

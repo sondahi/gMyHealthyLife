@@ -3,7 +3,7 @@ package com.comert.mhl.database.meal.service;
 import com.comert.mhl.database.common.model.dto.IdAndName;
 import com.comert.mhl.database.meal.model.entity.Meal;
 
-import java.util.List;
+import java.util.Set;
 
 public interface MealService {
 
@@ -13,12 +13,12 @@ public interface MealService {
 
     Meal updateMeal(Meal meal);
 
-    void removeMeal(Meal meal);
+    void deleteMeal(Integer mealId);
 
-    List<Meal> listMeals();
+    Set<Meal> listMeals();
 
-    List<Meal> listMeals(int firstResult, int maxResult);
+    Set<Meal> listMeals(int firstResult, int maxResult);
 
-    List<IdAndName> listMealsByIdAndName();
+    Set<IdAndName> listMealsByIdAndName();
 
 }

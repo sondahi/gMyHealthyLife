@@ -8,7 +8,7 @@ import com.comert.mhl.database.member.service.MemberService;
 import jakarta.ejb.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Local(MemberService.class)
 @Stateless(name = "MemberServiceEJB")
@@ -39,7 +39,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> listMembers(int firstResult, int maxResult) {
+    public Set<Member> listMembers(int firstResult, int maxResult) {
         return memberRepository.listMembers(firstResult, maxResult);
     }
 

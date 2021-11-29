@@ -9,17 +9,17 @@ import java.io.Serializable;
 
 public class Authentication implements Serializable {
 
-    private final Integer memberId;
+    private final Long memberId;
     private final String memberName;
     private final MemberType memberType;
 
-    public Authentication(Integer memberId, String memberName, MemberType memberType) {
+    public Authentication(Long memberId, String memberName, MemberType memberType) {
         this.memberId = memberId;
         this.memberName = memberName;
         this.memberType = memberType;
     }
 
-    public Integer getMemberId() {
+    public Long getMemberId() {
         return memberId;
     }
 

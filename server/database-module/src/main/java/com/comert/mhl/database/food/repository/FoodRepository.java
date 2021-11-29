@@ -8,7 +8,9 @@ import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Stateless
 @LocalBean
@@ -53,25 +55,28 @@ public class FoodRepository implements FoodService {
     }
 
     @Override
-    public List<Food> listFoods() {
-        return entityManager
+    public Set<Food> listFoods() {
+        Collection<Food> foods = entityManager
                 .createNamedQuery("Food.listFoods", Food.class)
                 .getResultList();
+        return new HashSet<>(foods);
     }
 
     @Override
-    public List<Food> listFoods(int firstResult, int maxResult) {
-        return entityManager
+    public Set<Food> listFoods(int firstResult, int maxResult) {
+        Collection<Food> foods = entityManager
                 .createNamedQuery("Food.listFoods", Food.class)
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResult)
                 .getResultList();
+        return new HashSet<>(foods);
     }
 
     @Override
-    public List<IdAndName> listFoodsByIdAndName() {
-        return entityManager
+    public Set<IdAndName> listFoodsByIdAndName() {
+        Collection<IdAndName> idAndNames = entityManager
                 .createNamedQuery("Food.listFoodsByIdAndName", IdAndName.class)
                 .getResultList();
+        return new HashSet<>(idAndNames);
     }
 }

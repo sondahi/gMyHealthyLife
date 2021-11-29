@@ -2,8 +2,8 @@ package com.comert.mhl.web.controller;
 
 import com.comert.mhl.database.common.model.dto.Authentication;
 import com.comert.mhl.payment.dto.Order;
+import com.comert.mhl.payment.service.PayPalService;
 import com.comert.mhl.web.controller.util.FacesUtils;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.ejb.EJB;
@@ -12,14 +12,15 @@ import jakarta.enterprise.context.ConversationScoped;
 import jakarta.enterprise.inject.New;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
+
 import java.io.IOException;
 import java.io.Serializable;
 
 /*
-* conversion exceptionları kontrol et
-* başlamışsa başlatılamaz
-* bitirilmişse bitirilemez
-* timeout ...
+ * conversion exceptionları kontrol et
+ * başlamışsa başlatılamaz
+ * bitirilmişse bitirilemez
+ * timeout ...
  */
 @Named("paymentController")
 @ConversationScoped
@@ -51,23 +52,24 @@ public class PaymentBean implements Serializable {
     }
 
     @PostConstruct
-    public void onConstruct(){
-        System.out.println("bean with haschcode : "+hashCode()+" constructed conversionId: "+conversionId);
+    public void onConstruct() {
+        System.out.println("bean with haschcode : " + hashCode() + " constructed conversionId: " + conversionId);
     }
 
     @PreDestroy
-    public void onDestroy(){
-        System.out.println("bean with haschcode : "+hashCode()+" destroyed conversionId: "+conversionId);
-        service.removeEJB ();
+    public void onDestroy() {
+        System.out.println("bean with haschcode : " + hashCode() + " destroyed conversionId: " + conversionId);
+        service.removeEJB();
     }
 
-    private void begin(){
+    private void begin() {
         Authentication authentication = (Authentication) facesUtils.getSessionAttribute("authentication");
         String memberId = String.valueOf(authentication.getMemberId());
         conversation.begin(memberId);
         conversionId = conversation.getId();
     }
-    private void end(){
+
+    private void end() {
         conversation.end();
     }
 
@@ -79,13 +81,13 @@ public class PaymentBean implements Serializable {
         this.order = order;
     }
 
-    public String selectProduct(){
+    public String selectProduct() {
         return "/userview/payment/product.xhtml";
     }
 
-    public String checkout(){
-        String cancelUrl = CANCEL_URL+"?cid="+conversation.getId();
-        String successUrl = SUCCESS_URL+"?cid="+conversation.getId();
+    public String checkout() {
+        String cancelUrl = CANCEL_URL + "?cid=" + conversation.getId();
+        String successUrl = SUCCESS_URL + "?cid=" + conversation.getId();
         String approvalLink = service.getApprovalLink(order, cancelUrl, successUrl);
         try {
             facesUtils.getExternalContext().redirect(approvalLink);
@@ -95,24 +97,24 @@ public class PaymentBean implements Serializable {
         return "/userview/payment/review.xhtml";
     }
 
-    public String pay(){
+    public String pay() {
         String paymentId = getPaymentId();
         String payerId = getPayerId();
         service.pay(paymentId, payerId);
         return "/userview/payment/receipt.xhtml";
     }
 
-    public String goToHome(){
+    public String goToHome() {
         end();
         return "/userview/home.xhtml";
     }
 
     public String getPaymentId() {
-        return  facesUtils.getRequestParameter("paymentId");
+        return facesUtils.getRequestParameter("paymentId");
     }
 
     public String getPayerId() {
-        return  facesUtils.getRequestParameter("PayerID");
+        return facesUtils.getRequestParameter("PayerID");
     }
 
 }

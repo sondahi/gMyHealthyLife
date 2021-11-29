@@ -3,13 +3,11 @@ package com.comert.mhl.web.controller;
 import com.comert.mhl.database.common.model.dto.IdAndName;
 import com.comert.mhl.database.food.model.entity.Food;
 import com.comert.mhl.database.food.service.FoodService;
-import com.comert.mhl.web.controller.cache.*;
-
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.EJB;
 import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Inject;
 import jakarta.inject.Named;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -26,15 +24,14 @@ public class FoodBean implements Serializable {
     @EJB
     private FoodService service;
 
-    @Inject
-    private CacheUser cacheUser;
+    //@Inject private CacheUser cacheUser;
 
     public FoodBean() {
     }
 
     @PostConstruct
-    private void loadItemList(){
-        selectableItems = cacheUser.getFoodIdAndNames();
+    private void loadItemList() {
+        selectableItems = service.listFoodsByIdAndName();
     }
 
     public List<IdAndName> getSelectableItems() {
@@ -47,12 +44,12 @@ public class FoodBean implements Serializable {
 
     public void setSelectedValue(long selectedValue) {
         this.selectedValue = selectedValue;
-        if(selectedValue!=0){
+        if (selectedValue != 0) {
             findFood();
             logoRendered = true;
         } else
             selectedFood = null;
-            logoRendered = false;
+        logoRendered = false;
     }
 
     public Food getSelectedFood() {
@@ -75,9 +72,9 @@ public class FoodBean implements Serializable {
         return foodLogoPath;
     }
 
-    private void findFood(){
+    private void findFood() {
         selectedFood = service.findFoodById((int) selectedValue);
-        foodLogoPath = "/resources/logos/foods/"+selectedFood.getLogoPath();
+        foodLogoPath = "/resources/logos/foods/" + selectedFood.getLogoPath();
     }
 
 

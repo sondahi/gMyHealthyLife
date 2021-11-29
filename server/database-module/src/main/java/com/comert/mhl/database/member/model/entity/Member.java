@@ -2,16 +2,29 @@ package com.comert.mhl.database.member.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.QueryHints;
 
 import java.io.Serializable;
 
 @Entity
-@Table( name = "Member",
+@Table(name = "Member",
         uniqueConstraints = {@UniqueConstraint(name = "UC_Member_memberEmail", columnNames = "memberEmail")},
         indexes = {@Index(name = "I_MemberAuthentication", columnList = "memberEmail,memberPassword")}
 )
 @Cacheable(value = false)
-@Inheritance(strategy = InheritanceType.JOINED )
+@NamedQueries({
+        @NamedQuery(
+                name = "Member.listMembers",
+                query = "select m from Member as m",
+                hints = {
+                        @QueryHint(
+                                name = QueryHints.CACHEABLE,
+                                value = "true"
+                        )
+                }
+        )
+})
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Member implements Serializable {
 
     @Id
@@ -33,7 +46,8 @@ public abstract class Member implements Serializable {
     @Embedded
     private Membership membership;
 
-    public Member() {}
+    public Member() {
+    }
 
     public Long getMemberId() {
         return memberId;

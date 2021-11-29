@@ -2,16 +2,19 @@ package com.comert.mhl.database.meal.repository;
 
 import com.comert.mhl.database.common.model.dto.IdAndName;
 import com.comert.mhl.database.meal.model.entity.Meal;
+import com.comert.mhl.database.meal.service.MealService;
 import jakarta.ejb.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Stateless
 @LocalBean
 @TransactionManagement(value = TransactionManagementType.CONTAINER)
-public class MealRepository {
+public class MealRepository implements MealService {
 
     public MealRepository() {
     }
@@ -19,48 +22,54 @@ public class MealRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Override
     public Meal findMealById(Integer mealId) {
         return entityManager.find(Meal.class, mealId);
     }
 
+    @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public void persistEntity(Meal entity) {
+    public void saveMeal(Meal entity) {
         entityManager.persist(entity);
     }
 
+    @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public Meal mergeEntity(Meal entity) {
+    public Meal updateMeal(Meal entity) {
         return entityManager.merge(entity);
     }
 
+    @Override
     @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public void refreshEntity(Meal entity) {
-        entityManager.refresh(entity);
+    public void deleteMeal(Integer mealId) {
+        Meal meal = entityManager.getReference(Meal.class, mealId);
+        entityManager.remove(meal);
     }
 
-    @TransactionAttribute(value = TransactionAttributeType.REQUIRED)
-    public void removeEntity(Meal entity) {
-        entityManager.remove(entity);
-    }
-
-    public List<Meal> listMeals() {
-        return entityManager
+    @Override
+    public Set<Meal> listMeals() {
+        Collection<Meal> meals = entityManager
                 .createNamedQuery("Meal.listMeals", Meal.class)
                 .getResultList();
+        return new HashSet<>(meals);
     }
 
-    public List<Meal> listMeals(int firstResult, int maxResult) {
-        return entityManager
+    @Override
+    public Set<Meal> listMeals(int firstResult, int maxResult) {
+        Collection<Meal> meals = entityManager
                 .createNamedQuery("Meal.listMeals", Meal.class)
                 .setFirstResult(firstResult)
                 .setMaxResults(maxResult)
                 .getResultList();
+        return new HashSet<>(meals);
     }
 
-    public List<IdAndName> listMealsByIdAndName() {
-        return entityManager
+    @Override
+    public Set<IdAndName> listMealsByIdAndName() {
+        Collection<IdAndName> idAndNames = entityManager
                 .createNamedQuery("Meal.listMealsByIdAndName", IdAndName.class)
                 .getResultList();
+        return new HashSet<>(idAndNames);
     }
 
 

@@ -2,11 +2,10 @@ package com.comert.mhl.database.member.service;
 
 import com.comert.mhl.database.common.exception.AuthenticationException;
 import com.comert.mhl.database.common.model.dto.Authentication;
-import com.comert.mhl.database.common.model.dto.IdAndName;
 import com.comert.mhl.database.member.model.entity.Member;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 public interface MemberService {
 
@@ -18,7 +17,7 @@ public interface MemberService {
 
     void deleteMember(final Long memberId);
 
-    List<Member> listMembers(int firstResult, int maxResult);
+    Set<Member> listMembers(int firstResult, int maxResult);
 
     Authentication authenticate(final String memberEmail, final String memberPassword) throws AuthenticationException;
 

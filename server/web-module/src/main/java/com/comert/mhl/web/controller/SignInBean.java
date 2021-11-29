@@ -1,8 +1,7 @@
 package com.comert.mhl.web.controller;
 
-import com.comert.mhl.database.common.model.dto.Authentication;
 import com.comert.mhl.database.common.exception.AuthenticationException;
-
+import com.comert.mhl.database.common.model.dto.Authentication;
 import com.comert.mhl.database.member.service.MemberService;
 import com.comert.mhl.web.controller.util.FacesUtils;
 import jakarta.ejb.EJB;
@@ -43,18 +42,18 @@ public class SignInBean implements Serializable {
         this.password = password;
     }
 
-    public void signIn(){
+    public void signIn() {
         try {
             authentication = service.authenticate(eMail, password);
             facesUtils.setSessionAttribute("authentication", authentication);
             try {
-                facesUtils.getExternalContext ().dispatch ( "/login" );
-                facesUtils.getFacesContext ().responseComplete ();
+                facesUtils.getExternalContext().dispatch("/login");
+                facesUtils.getFacesContext().responseComplete();
             } catch (IOException e) {
-                System.out.println (e.getMessage () );
+                System.out.println(e.getMessage());
             }
         } catch (AuthenticationException e) {
-            e.printStackTrace ();
+            e.printStackTrace();
         }
     }
 }

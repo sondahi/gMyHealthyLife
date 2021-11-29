@@ -1,7 +1,6 @@
 package com.comert.mhl.database.meal.service.impl;
 
 import com.comert.mhl.database.common.model.dto.IdAndName;
-import com.comert.mhl.database.food.model.entity.Food;
 import com.comert.mhl.database.meal.model.entity.Meal;
 import com.comert.mhl.database.meal.repository.MealRepository;
 import com.comert.mhl.database.meal.service.MealService;
@@ -9,7 +8,7 @@ import jakarta.ejb.*;
 import jakarta.inject.Inject;
 import jakarta.validation.Validator;
 
-import java.util.List;
+import java.util.Set;
 
 @Local(MealService.class)
 @Stateless(name = "MealServiceEJB")
@@ -29,31 +28,31 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public void saveMeal(Meal meal) {
-        mealRepository.persistEntity(meal);
+        mealRepository.saveMeal(meal);
     }
 
     @Override
     public Meal updateMeal(Meal meal) {
-        return mealRepository.mergeEntity(meal);
+        return mealRepository.updateMeal(meal);
     }
 
     @Override
-    public void removeMeal(Meal meal) {
-        mealRepository.removeEntity(meal);
+    public void deleteMeal(Integer mealId) {
+        mealRepository.deleteMeal(mealId);
     }
 
     @Override
-    public List<Meal> listMeals() {
+    public Set<Meal> listMeals() {
         return mealRepository.listMeals();
     }
 
     @Override
-    public List<Meal> listMeals(int firstResult, int maxResult) {
+    public Set<Meal> listMeals(int firstResult, int maxResult) {
         return mealRepository.listMeals(firstResult, maxResult);
     }
 
     @Override
-    public List<IdAndName> listMealsByIdAndName() {
+    public Set<IdAndName> listMealsByIdAndName() {
         return mealRepository.listMealsByIdAndName();
     }
 }

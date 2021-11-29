@@ -8,7 +8,7 @@ import jakarta.ejb.*;
 import jakarta.inject.Inject;
 import jakarta.validation.Validator;
 
-import java.util.List;
+import java.util.Set;
 
 @Local(value = FoodService.class)
 @Stateless(name = "FoodServiceEJB")
@@ -50,17 +50,17 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public List<Food> listFoods() {
+    public Set<Food> listFoods() {
         return foodRepository.listFoods();
     }
 
     @Override
-    public List<Food> listFoods(int firstResult, int maxResult) {
+    public Set<Food> listFoods(int firstResult, int maxResult) {
         return foodRepository.listFoods(firstResult, maxResult);
     }
 
     @Override
-    public List<IdAndName> listFoodsByIdAndName() {
+    public Set<IdAndName> listFoodsByIdAndName() {
         return foodRepository.listFoodsByIdAndName();
     }
 }

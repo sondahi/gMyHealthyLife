@@ -25,7 +25,7 @@ import java.util.*;
 public class LocaleBean implements Serializable {
 
     private Locale memberLocale;
-    private List<Locale> applicationLocales;
+    private final List<Locale> applicationLocales;
 
     @Inject
     private FacesUtils facesUtils;

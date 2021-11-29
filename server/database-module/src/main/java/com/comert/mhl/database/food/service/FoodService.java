@@ -2,9 +2,8 @@ package com.comert.mhl.database.food.service;
 
 import com.comert.mhl.database.common.model.dto.IdAndName;
 import com.comert.mhl.database.food.model.entity.Food;
-import com.comert.mhl.database.foodcategory.model.entity.FoodCategory;
 
-import java.util.List;
+import java.util.Set;
 
 public interface FoodService {
 
@@ -16,10 +15,10 @@ public interface FoodService {
 
     void removeFood(final Integer foodId);
 
-    List<Food> listFoods();
+    Set<Food> listFoods();
 
-    List<Food> listFoods(final int firstResult, final int maxResult);
+    Set<Food> listFoods(final int firstResult, final int maxResult);
 
-    List<IdAndName> listFoodsByIdAndName();
+    Set<IdAndName> listFoodsByIdAndName();
 
 }
