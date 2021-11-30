@@ -2,6 +2,7 @@
 /target
 
 *.flattened-pom.xml
+*.log
 
 server/application-module/target
 server/web-module/target
@@ -14,3 +15,5 @@ server/common-sources/logger/target
 server/common-sources/exception-converter/target
 
 clients/
+/db-transfer/target/
+/db-transfer/HealthyEat/

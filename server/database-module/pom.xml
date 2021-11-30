@@ -155,20 +155,16 @@
                     </archive>
                     <generateClient>${generate-ejb-client}</generateClient>
                     <clientExcludes>
-                        <clientExclude>com/comert/mhl/database/common/model/listener/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/common/repository/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/common/service/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/common/validator/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/common/**</clientExclude>
                         <clientExclude>com/comert/mhl/database/foodcategory/repository/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/foodcategory/service/impl/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/foodcategory/service/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/foodcategory/resource/**</clientExclude>
                         <clientExclude>com/comert/mhl/database/food/repository/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/food/service/impl/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/mealcategory/repository/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/mealcategory/service/impl/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/meal/repository/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/meal/service/impl/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/member/repository/**</clientExclude>
-                        <clientExclude>com/comert/mhl/database/member/service/impl/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/food/service/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/food/resource/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/mealcategory/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/meal/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/member/**</clientExclude>
                         <clientExclude>META-INF/*</clientExclude>
                         <clientExclude>sql/*</clientExclude>
                     </clientExcludes>

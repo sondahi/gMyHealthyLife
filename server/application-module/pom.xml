@@ -45,16 +45,19 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>database-module</artifactId>
             <type>ejb</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>payment-module</artifactId>
             <type>ejb</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>mail-module</artifactId>
             <type>ejb</type>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

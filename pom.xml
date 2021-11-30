@@ -13,6 +13,7 @@
     <modules>
         <module>server</module>
         <module>clients</module>
+        <module>db-transfer</module>
     </modules>
 
     <properties>

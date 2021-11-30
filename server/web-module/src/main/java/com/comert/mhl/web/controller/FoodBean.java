@@ -9,13 +9,13 @@ import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 @Named(value = "foodController")
 @ViewScoped
 public class FoodBean implements Serializable {
 
-    private List<IdAndName> selectableItems;
+    private Set<IdAndName> selectableItems;
     private long selectedValue;
     private Food selectedFood;
     private boolean logoRendered;
@@ -34,7 +34,7 @@ public class FoodBean implements Serializable {
         selectableItems = service.listFoodsByIdAndName();
     }
 
-    public List<IdAndName> getSelectableItems() {
+    public Set<IdAndName> getSelectableItems() {
         return selectableItems;
     }
 

@@ -111,7 +111,7 @@
                 <artifactId>database-module</artifactId>
                 <version>${revision}</version>
                 <type>ejb</type>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
@@ -122,23 +122,9 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>database-module</artifactId>
-                <version>${revision}</version>
-                <type>ejb-client</type>
-                <scope>provided</scope>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>payment-module</artifactId>
                 <version>${revision}</version>
                 <type>ejb</type>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>payment-module</artifactId>
-                <version>${revision}</version>
-                <type>ejb-client</type>
                 <scope>provided</scope>
             </dependency>
             <dependency>
@@ -146,13 +132,6 @@
                 <artifactId>mail-module</artifactId>
                 <version>${revision}</version>
                 <type>ejb</type>
-                <scope>compile</scope>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>mail-module</artifactId>
-                <version>${revision}</version>
-                <type>ejb-client</type>
                 <scope>provided</scope>
             </dependency>
         </dependencies>
