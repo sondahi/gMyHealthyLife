@@ -155,7 +155,12 @@
                     </archive>
                     <generateClient>${generate-ejb-client}</generateClient>
                     <clientExcludes>
-                        <clientExclude>com/comert/mhl/database/common/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/common/exception/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/common/model/dto/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/common/model/listener/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/common/repository/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/common/resource/**</clientExclude>
+                        <clientExclude>com/comert/mhl/database/common/validator/**</clientExclude>
                         <clientExclude>com/comert/mhl/database/foodcategory/repository/**</clientExclude>
                         <clientExclude>com/comert/mhl/database/foodcategory/service/**</clientExclude>
                         <clientExclude>com/comert/mhl/database/foodcategory/resource/**</clientExclude>

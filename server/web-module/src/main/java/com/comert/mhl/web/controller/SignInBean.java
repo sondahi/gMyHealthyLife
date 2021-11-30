@@ -53,7 +53,7 @@ public class SignInBean implements Serializable {
                 System.out.println(e.getMessage());
             }
         } catch (AuthenticationException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 }

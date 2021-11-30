@@ -9,7 +9,7 @@
     <jta-data-source>java:/MySqlDS</jta-data-source>
     <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
     <properties>
-      <property name="jakarta.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="jakarta.persistence.schema-generation.database.action" value="none"/>
       <property name="jakarta.persistence.sql-load-script-source" value="sql/load.sql"/>
 
       <property name="jakarta.persistence.validation.mode" value="none"/>
