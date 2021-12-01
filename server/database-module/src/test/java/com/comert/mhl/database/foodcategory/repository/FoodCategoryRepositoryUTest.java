@@ -50,7 +50,7 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
         entityManager = createEntityManager();
         sessionContext = Mockito.mock(SessionContext.class);
         repository = new FoodCategoryRepository(entityManager, sessionContext);
-        commandExecutor = new TransactionalCommandExecutor(entityManager); // another instance for transaction
+        commandExecutor = new TransactionalCommandExecutor(entityManager);
     }
 
     @AfterEach
@@ -68,7 +68,7 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"Milk Category", "Meat Category"})
-        public void testPersistAndFindAndGetReferenceEntity(final FoodCategory foodCategory) {
+        public void testSuccessPersistAndFindAndGetReferenceEntity(final FoodCategory foodCategory) {
             //managed entity
             commandExecutor.executeTransactionalCommand(
                     () -> repository.saveFoodCategory(foodCategory)
@@ -91,7 +91,7 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
             entityManager.detach(foundCategory);
             assertFalse(entityManager.contains(foundCategory));
 
-            //again managed entity, no method defined for getReference in repository but it works. (entitManager is the same instance in repository)
+            //again managed entity
             final var deReferencedCategory = entityManager.getReference(FoodCategory.class, foundCategory.getFoodCategoryId());
 
             assertTrue(entityManager.contains(deReferencedCategory));
@@ -99,7 +99,7 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"Milk Category", "Meat Category"})
-        public void testMergeEntity(final FoodCategory foodCategory) {
+        public void testSuccessMergeEntity(final FoodCategory foodCategory) {
             //managed entity
             commandExecutor.executeTransactionalCommand(() -> repository.saveFoodCategory(foodCategory));
 
@@ -128,7 +128,7 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"Milk Category", "Meat Category"})
-        public void testRefreshEntity(FoodCategory foodCategory) {
+        public void testSuccessRefreshEntity(FoodCategory foodCategory) {
             commandExecutor.executeTransactionalCommand(
                     () -> repository.saveFoodCategory(foodCategory)
             );
@@ -137,10 +137,10 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
             final var mergedCategoryName = "Updated Category";
 
             final var anotherSession = createEntityManager();
-            final var anotherTransactionCommandExecuter = new TransactionalCommandExecutor(anotherSession);
+            final var anotherTransactionCommandExecutor = new TransactionalCommandExecutor(anotherSession);
 
             // updating name in another session and transaction
-            anotherTransactionCommandExecuter.executeTransactionalCommand(
+            anotherTransactionCommandExecutor.executeTransactionalCommand(
                     () -> {
                         final var query = anotherSession.createQuery(
                                 "update FoodCategory fg set fg.foodCategoryName=:name where fg.foodCategoryId =:id"
@@ -164,7 +164,7 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
 
         @ParameterizedTest
         @ValueSource(strings = {"Milk Category", "Meat Category"})
-        public void testRemoveEntity(final FoodCategory foodCategory) {
+        public void testSuccessRemoveEntity(final FoodCategory foodCategory) {
             //managed entity
             commandExecutor.executeTransactionalCommand(() -> repository.saveFoodCategory(foodCategory));
 
@@ -175,12 +175,12 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
             final var removedCategory = repository.findFoodCategoryById(removedCategoryId);
 
             assertNull(removedCategory);
-            assertFalse(entityManager.contains(removedCategory));
+            assertFalse(entityManager.contains(foodCategory));
         }
 
         @Test
-        public void testListEntities() {
-            final var toPersistCategories = fullFoodCategorySet();
+        public void testSuccessListEntities() {
+            final var toPersistCategories = fullFoodCategorySetToPersist();
 
             toPersistCategories.forEach(
                     foodCategory -> commandExecutor.executeTransactionalCommand(
@@ -204,7 +204,7 @@ public class FoodCategoryRepositoryUTest extends GenericUnitTest {
 
         @Test
         public void testListEntitiesByIdAndName() {
-            final var toPersistCategories = fullFoodCategorySet();
+            final var toPersistCategories = fullFoodCategorySetToPersist();
 
             toPersistCategories.forEach(
                     foodCategory -> commandExecutor.executeTransactionalCommand(

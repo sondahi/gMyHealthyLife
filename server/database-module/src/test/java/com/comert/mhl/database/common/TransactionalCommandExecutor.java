@@ -1,8 +1,6 @@
 package com.comert.mhl.database.common;
 
-import jakarta.persistence.Cache;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.LockModeType;
 import org.hibernate.jpa.QueryHints;
 import org.junit.jupiter.api.Disabled;
 
@@ -28,24 +26,24 @@ public class TransactionalCommandExecutor {
                             .executeUpdate()
                     );
             entityManager.getTransaction().commit();
-        } catch (Throwable throwable) {
+        } catch (Throwable throwable) { // execute rollback and return again
             if (entityManager.getTransaction().isActive())
                 entityManager.getTransaction().rollback();
             else
-                throw new TestException(throwable); // rollback yapılamzsa ise junit'e gönder. Eğer TestException alınırsa test harici problem var demektir.
-            throw throwable; // rollback yapıldıktan sonra junit'e gönder
+                throw new TestException(throwable);
+            throw throwable;
         } finally {
             secondLevelCache.evictAll();
         }
     }
 
-    // persist, merge, remove
+    // persist, remove
     public void executeTransactionalCommand(final VoidCommand command) {
         try {
             entityManager.getTransaction().begin();
             command.execute();
             entityManager.getTransaction().commit();
-        } catch (final Throwable throwable) {
+        } catch (final Throwable throwable) { // execute rollback and return again
             if (entityManager.getTransaction().isActive())
                 entityManager.getTransaction().rollback();
             else
@@ -61,7 +59,7 @@ public class TransactionalCommandExecutor {
             T toReturn = command.execute();
             entityManager.getTransaction().commit();
             return toReturn;
-        } catch (final Throwable throwable) {
+        } catch (final Throwable throwable) { // execute rollback and return again
             if (entityManager.getTransaction().isActive())
                 entityManager.getTransaction().rollback();
             else

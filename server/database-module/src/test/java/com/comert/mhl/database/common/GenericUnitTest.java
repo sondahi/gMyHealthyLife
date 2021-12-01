@@ -4,7 +4,9 @@ import jakarta.persistence.Cache;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 
 @Disabled
 public abstract class GenericUnitTest {
@@ -15,19 +17,19 @@ public abstract class GenericUnitTest {
     @BeforeAll
     protected void setUpTest() {
         entityManagerFactory = Persistence.createEntityManagerFactory("mhltest");
-        secondLevelCache = entityManagerFactory.getCache ();
+        secondLevelCache = entityManagerFactory.getCache();
     }
 
     @AfterAll
     protected void tearDownTest() {
-        if(entityManagerFactory!=null && entityManagerFactory.isOpen ()){
-            secondLevelCache.evictAll ();
+        if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
+            secondLevelCache.evictAll();
             entityManagerFactory.close();
         }
     }
 
-    protected EntityManager createEntityManager(){
-        return entityManagerFactory.createEntityManager ();
+    protected EntityManager createEntityManager() {
+        return entityManagerFactory.createEntityManager();
     }
 
     protected abstract void setUpScenario();

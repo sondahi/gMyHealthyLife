@@ -115,13 +115,6 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>database-module</artifactId>
-                <version>${revision}</version>
-                <type>test-jar</type>
-                <scope>test</scope>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>payment-module</artifactId>
                 <version>${revision}</version>
                 <type>ejb</type>
