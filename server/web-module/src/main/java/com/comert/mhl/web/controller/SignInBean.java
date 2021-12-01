@@ -20,11 +20,11 @@ public class SignInBean implements Serializable {
     private String password = "1";
     private Authentication authentication;
 
-    @EJB
-    private MemberService service;
-
     @Inject
     private FacesUtils facesUtils;
+
+    @EJB
+    private MemberService service;
 
     public String geteMail() {
         return eMail;
@@ -53,7 +53,7 @@ public class SignInBean implements Serializable {
                 System.out.println(e.getMessage());
             }
         } catch (AuthenticationException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }

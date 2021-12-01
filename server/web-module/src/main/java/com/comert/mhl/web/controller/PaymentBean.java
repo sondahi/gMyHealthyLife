@@ -26,8 +26,8 @@ import java.io.Serializable;
 @ConversationScoped
 public class PaymentBean implements Serializable {
 
-    private static final String SUCCESS_URL = "http://localhost:8080/userview/payment/review.xhtml";
-    private static final String CANCEL_URL = "http://localhost:8080/userview/payment/receipt.xhtml";
+    private static final String SUCCESS_URL = "http://localhost:8080/userview/review.xhtml";
+    private static final String CANCEL_URL = "http://localhost:8080/userview/receipt.xhtml";
 
     private FacesUtils facesUtils;
     private Conversation conversation;
@@ -67,6 +67,7 @@ public class PaymentBean implements Serializable {
         String memberId = String.valueOf(authentication.getMemberId());
         conversation.begin(memberId);
         conversionId = conversation.getId();
+        conversation.setTimeout(60000);
     }
 
     private void end() {
@@ -82,7 +83,7 @@ public class PaymentBean implements Serializable {
     }
 
     public String selectProduct() {
-        return "/userview/payment/product.xhtml";
+        return "/userview/product.xhtml";
     }
 
     public String checkout() {
@@ -94,14 +95,14 @@ public class PaymentBean implements Serializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "/userview/payment/review.xhtml";
+        return "/userview/review.xhtml";
     }
 
     public String pay() {
         String paymentId = getPaymentId();
         String payerId = getPayerId();
         service.pay(paymentId, payerId);
-        return "/userview/payment/receipt.xhtml";
+        return "/userview/receipt.xhtml";
     }
 
     public String goToHome() {

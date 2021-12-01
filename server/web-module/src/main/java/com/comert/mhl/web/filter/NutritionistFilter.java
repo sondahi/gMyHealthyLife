@@ -2,11 +2,11 @@ package com.comert.mhl.web.filter;
 
 import com.comert.mhl.database.common.model.dto.Authentication;
 import com.comert.mhl.database.member.model.entity.MemberType;
-
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 
@@ -28,7 +28,7 @@ public class NutritionistFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         Authentication authentication = (Authentication) httpServletRequest.getSession(false).getAttribute("authentication");
-        if(authentication!=null && authentication.getMemberType() == MemberType.NUTRITIONIST)
+        if (authentication != null && authentication.getMemberType() == MemberType.NUTRITIONIST)
             chain.doFilter(request, response);
         else {
             httpServletRequest.getSession(false).invalidate();

@@ -2,8 +2,8 @@
 <!--
   Created by IntelliJ IDEA.
   User: gokaycomert
-  Date: 05.05.21
-  Time: 01:22
+  Date: 12.05.21
+  Time: 23:09
 -->
 <!DOCTYPE html
         PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -11,18 +11,19 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+>
 
 <h:head>
-    <title>Title</title>
+    <title>Food</title>
 </h:head>
 
 <h:body>
-    <h1>Select a Payment Method</h1><br/>
-    <h:form>
-        <p:commandButton value="paypal" action="#{paymentController.selectProduct}" ajax="false"/>
-    </h:form>
+    <ui:composition template="template/templatedefinition.xhtml">
+        <ui:define name="content">
+            <ui:include src="include/emailcontentinclude.xhtml"/>
+        </ui:define>
+    </ui:composition>
 </h:body>
 
 </html>

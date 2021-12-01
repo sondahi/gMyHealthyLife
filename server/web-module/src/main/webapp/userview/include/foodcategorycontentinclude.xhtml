@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: gokaycomert
+  Date: 13.05.21
+  Time: 01:24
+-->
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+
+<h:body>
+    <h:outputLabel value="FoodCategory"/><br/>
+    <h:form id="foodCategoryForm">
+
+        <h:selectOneMenu id="selectedValue" value="#{foodCategoryController.selectedValue}">
+            <f:selectItem itemValue="0" itemLabel="--select a food category--"/>
+            <f:selectItems value="#{foodCategoryController.selectableItems}" var="idAndName"
+                           itemValue="#{idAndName.value}"
+                           itemLabel="#{idAndName.label}"/>
+            <f:ajax event="valueChange" execute="@this" render="foods"/>
+        </h:selectOneMenu><br/>
+    </h:form><br/>
+
+    <p:dataTable id="foods" var="food" value="#{foodCategoryController.selectedFoodCategory.foods}">
+        <p:column headerText="Foods">
+            <h:outputText value="#{food.foodName}" />
+        </p:column>
+    </p:dataTable>
+</h:body>
+
+</html>

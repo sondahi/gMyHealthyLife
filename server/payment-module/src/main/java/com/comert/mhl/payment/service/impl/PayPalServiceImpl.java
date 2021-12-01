@@ -59,5 +59,6 @@ public class PayPalServiceImpl implements PayPalService {
     @Remove
     @Override
     public void removeEJB() {
+        System.out.println("Statefull bean is removed"+this.getClass().getSimpleName());
     }
 }

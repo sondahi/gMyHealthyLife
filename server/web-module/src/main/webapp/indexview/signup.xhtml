@@ -62,8 +62,8 @@
                               requiredMessage="Value is required."/>
                 <p:message for="memberBirthday" severity="error" showDetail="true"/>
 
-                <h:commandButton id="registrationButton" value="Register"
-                                 action="#{signUpController.register}" update="registrationGrid"/>
+                <p:commandButton id="registrationButton" value="Register"
+                                 action="#{signUpController.register}" update="registrationGrid" ajax="false"/>
             </p:panelGrid>
         </h:panelGroup>
     </h:form>

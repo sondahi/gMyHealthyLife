@@ -16,15 +16,13 @@ import java.util.Set;
 public class FoodBean implements Serializable {
 
     private Set<IdAndName> selectableItems;
-    private long selectedValue;
+    private int selectedValue;
     private Food selectedFood;
     private boolean logoRendered;
     private String foodLogoPath;
 
     @EJB
     private FoodService service;
-
-    //@Inject private CacheUser cacheUser;
 
     public FoodBean() {
     }
@@ -38,11 +36,11 @@ public class FoodBean implements Serializable {
         return selectableItems;
     }
 
-    public long getSelectedValue() {
+    public int getSelectedValue() {
         return selectedValue;
     }
 
-    public void setSelectedValue(long selectedValue) {
+    public void setSelectedValue(int selectedValue) {
         this.selectedValue = selectedValue;
         if (selectedValue != 0) {
             findFood();
@@ -73,7 +71,7 @@ public class FoodBean implements Serializable {
     }
 
     private void findFood() {
-        selectedFood = service.findFoodById((int) selectedValue);
+        selectedFood = service.findFoodById(selectedValue);
         foodLogoPath = "/resources/logos/foods/" + selectedFood.getLogoPath();
     }
 
