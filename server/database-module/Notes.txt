@@ -1,0 +1,2 @@
+AÇIK:
+* JPQL ve SQL Bulk querry'lerin caschlendiğini kontrol et.

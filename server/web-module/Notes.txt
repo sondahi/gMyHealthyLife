@@ -1,0 +1,3 @@
+* First converter, than validator
+* Firs Interceptors, than decorators.
+* JakartaEE 10, no faces-config.xml, Navigations ???
