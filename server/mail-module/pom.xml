@@ -33,14 +33,6 @@
                                 <addClasspath>true</addClasspath>
                             </manifest>
                         </archive>
-                        <generateClient>true</generateClient>
-                        <clientExcludes>
-                            <clientExclude>com/comert/mhl/mail/service/ejb/*</clientExclude>
-                            <clientExclude>com/comert/mhl/mail/mailsender/*</clientExclude>
-                            <clientExclude>META-INF/ejb-jar.xml</clientExclude>
-                            <clientExclude>META-INF/beans.xml</clientExclude>
-                            <clientExclude>META-INF/mail-jms.xml</clientExclude>
-                        </clientExcludes>
                     </configuration>
                 </plugin>
             </plugins>

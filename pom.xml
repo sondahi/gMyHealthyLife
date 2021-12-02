@@ -38,7 +38,7 @@
         <maven-war-plugin.version>3.3.2</maven-war-plugin.version>
         <maven-ejb-plugin.version>3.1.0</maven-ejb-plugin.version>
         <maven-jar-plugin.version>3.2.0</maven-jar-plugin.version>
-        <wildfly-plugin.version>2.1.0.Final</wildfly-plugin.version>
+        <wildfly-plugin.version>3.0.0.Alpha3</wildfly-plugin.version>
         <!--project general-->
         <org.glassfish.jersey.version>3.0.3</org.glassfish.jersey.version><!--jersey-bom: compile (clients), test (domain - integration)-->
         <org.apache.commons.version>3.12.0</org.apache.commons.version><!--commons-lang3: compile-->
@@ -56,7 +56,7 @@
         <!-- web module compile-->
         <org.primefaces.version>10.0.0</org.primefaces.version><!--compile-->
         <!-- payment module compile-->
-        <com.paypal.sdk.version>1.14.0</com.paypal.sdk.version><!--compile-->
+        <com.paypal.sdk.version>1.14.0</com.paypal.sdk.version><!--rest-api-sdk: compile-->
         <!-- db-transfer module-->
         <org.apache.derby.version>10.14.2.0</org.apache.derby.version><!-- derby : compile-->
     </properties>

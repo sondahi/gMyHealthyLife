@@ -1,7 +1,6 @@
 package com.comert.mhl.mail.mailsender;
 
 import com.comert.mhl.mail.mail.Mail;
-
 import jakarta.annotation.Resource;
 import jakarta.enterprise.context.Dependent;
 import jakarta.inject.Inject;
@@ -23,7 +22,7 @@ public class MessageProducerBean implements MessageProducer {
     @Override
     public void sendMail(Mail mail) {
         JMSProducer producer = context.createProducer();
-        producer.send(queue,mail);
+        producer.send(queue, mail);
     }
 
 }
