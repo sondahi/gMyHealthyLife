@@ -30,6 +30,7 @@ public class MessageConsumer implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
+        System.out.println("invoked");
         ObjectMessage objectMessage = (ObjectMessage) message;
         try {
             Mail mail = (Mail) objectMessage.getObject();

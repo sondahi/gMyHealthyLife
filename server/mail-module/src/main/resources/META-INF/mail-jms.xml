@@ -4,7 +4,7 @@
         <jms-destinations>
             <jms-queue name="MAILQ">
                 <entry name="jms/queue/MAILQ"/>
-                <entry name="java:jboss/exported/jms/queue/MAILQ"/>
+                <durable>false</durable>
             </jms-queue>
         </jms-destinations>
     </server>
