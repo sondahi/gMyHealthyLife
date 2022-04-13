@@ -1,7 +1,5 @@
 # MyHealthyLife
 
-gEmbedded
-
 Project is under development.
 
 There are some Spaghetti codes and dummy objets just for testing and another issues.
