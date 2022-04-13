@@ -19,7 +19,7 @@
     <properties>
         <revision>1.0.0-SNAPSHOT</revision>
         <encoding>UTF-8</encoding>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <!--maven default lifecycle plugins-->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
@@ -297,10 +297,10 @@
                         <configuration>
                             <rules>
                                 <requireJavaVersion>
-                                    <version>[11,)</version>
+                                    <version>[17,)</version>
                                 </requireJavaVersion>
                                 <requireMavenVersion>
-                                    <version>[3.8.3,)</version>
+                                    <version>[3.8.5,)</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>
